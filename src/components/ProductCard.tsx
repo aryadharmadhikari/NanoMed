@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Product } from "../data/products"; // Importing the "Type" rule we made
+import Link from "next/link";
 
 // JS Concept: "Destructuring"
 // Instead of saying props.product, we just extract { product } directly.
@@ -29,9 +30,12 @@ export default function ProductCard({ product }: { product: Product }) {
                     <span className="text-2xl font-bold text-gray-900">
                         ₹{product.price.toLocaleString("en-IN")} {/* Formats 1200 to 1,200 */}
                     </span>
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
+                    <Link
+                        href={`/products/${product.id}`}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition text-center"
+                    >
                         View Details
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
