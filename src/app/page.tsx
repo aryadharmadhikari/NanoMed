@@ -8,7 +8,7 @@ export default function Home() {
   const featuredProducts = products.slice(0, 3);
 
   return (
-    <main className="max-h-screen bg-white">
+    <main className="min-h-screen bg-white">
       {/* 1. The Hero Banner */}
       <Hero />
 
