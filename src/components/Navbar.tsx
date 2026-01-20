@@ -2,9 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const router = useRouter();
+
+    const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && searchQuery.trim()) {
+            setIsOpen(false); // Close mobile menu if open
+            router.push(`/products?query=${encodeURIComponent(searchQuery)}`);
+        }
+    };
 
     return (
         <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
@@ -18,16 +28,16 @@ export default function Navbar() {
                     {/* 2. Desktop Menu (Hidden on Mobile) */}
                     <div className="hidden md:flex items-center space-x-8">
                         <Link href="/" className="text-gray-600 hover:text-blue-600 font-medium transition">Home</Link>
-                        <Link href="/products" className="text-gray-600 hover:text-blue-600 font-medium transition">Catalog</Link>
+                        <Link href="/products" className="text-gray-600 hover:text-blue-600 font-medium transition">Products</Link>
                         <Link href="/blog" className="text-gray-600 hover:text-blue-600 font-medium transition">Blog</Link>
-                        <Link href="/about" className="text-gray-600 hover:text-blue-600 font-medium transition">About</Link>
+                        <Link href="/about" className="text-gray-600 hover:text-blue-600 font-medium transition">About Us</Link>
+                        <Link href="/contact" className="text-gray-600 hover:text-blue-600 font-medium transition">Contact Us</Link>
                         <Link
                             href="/products"
                             className="bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-blue-700 transition"
                         >
                             Order Now
                         </Link>
-                        {/* Replace the Desktop Menu code in Navbar.tsx with this to include the search input */}
                         <div className="hidden lg:flex items-center bg-gray-100 rounded-full px-4 py-2 ml-4">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -64,12 +74,28 @@ export default function Navbar() {
             </div>
 
             {/* 4. Mobile Menu Overlay (Animated) */}
+            {/* Mobile Menu Overlay */}
             {isOpen && (
                 <div className="md:hidden bg-white border-t border-gray-100 py-6 px-6 space-y-4 shadow-xl">
+                    {/* Mobile Search Bar (Inside the Menu) */}
+                    <div className="flex items-center bg-gray-100 rounded-xl px-4 py-3 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <input
+                            type="text"
+                            placeholder="Search medical equipment..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="bg-transparent border-none focus:ring-0 text-base ml-2 w-full text-gray-700"
+                            onKeyDown={handleSearch}
+                        />
+                    </div>
                     <Link href="/" onClick={() => setIsOpen(false)} className="block text-lg font-semibold text-gray-900">Home</Link>
-                    <Link href="/products" onClick={() => setIsOpen(false)} className="block text-lg font-semibold text-gray-900">Catalog</Link>
+                    <Link href="/products" onClick={() => setIsOpen(false)} className="block text-lg font-semibold text-gray-900">Products</Link>
                     <Link href="/blog" onClick={() => setIsOpen(false)} className="block text-lg font-semibold text-gray-900">Blog</Link>
-                    <Link href="/about" onClick={() => setIsOpen(false)} className="block text-lg font-semibold text-gray-900">About</Link>
+                    <Link href="/about" onClick={() => setIsOpen(false)} className="block text-lg font-semibold text-gray-900">About Us</Link>
+                    <Link href="/contact" onClick={() => setIsOpen(false)} className="block text-lg font-semibold text-gray-900">Contact Us</Link>
                     <Link
                         href="/products"
                         onClick={() => setIsOpen(false)}

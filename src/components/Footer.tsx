@@ -22,7 +22,9 @@ export default function Footer() {
                     <ul className="space-y-2 text-sm">
                         <li><Link href="/" className="hover:text-blue-400 transition">Home</Link></li>
                         <li><Link href="/products" className="hover:text-blue-400 transition">Product Catalog</Link></li>
+                        <li><Link href="/blog" className="hover:text-blue-400 transition">Blog</Link></li>
                         <li><Link href="/about" className="hover:text-blue-400 transition">About Us</Link></li>
+                        <li><Link href="/contact" className="hover:text-blue-400 transition">Contact Us</Link></li>
                     </ul>
                 </div>
 
@@ -30,20 +32,20 @@ export default function Footer() {
                 <div>
                     <h4 className="text-white font-semibold mb-4">Why Choose Us</h4>
                     <ul className="space-y-2 text-sm">
-                        <li className="flex items-center gap-2">✅ Quality Certified</li>
-                        <li className="flex items-center gap-2">🚀 Fast Delivery in Mumbai</li>
-                        <li className="flex items-center gap-2">📞 24/7 Support</li>
+                        <li className="flex items-center gap-2"> Quality Certified</li>
+                        <li className="flex items-center gap-2"> Fast Delivery in Mumbai</li>
+                        <li className="flex items-center gap-2"> 24/7 Support</li>
                     </ul>
                 </div>
 
                 {/* Column 4: Contact Info */}
                 <div>
-                    <h4 className="text-white font-semibold mb-4">Contact Us</h4>
+                    <h4 className="text-white font-semibold mb-2">Contact Us</h4>
                     <div className="text-sm space-y-2">
                         <p>Maruti Enterprises</p>
                         <p>Mumbai, Maharashtra</p>
-                        <p className="pt-2 text-blue-400 font-medium">Email: info@nanomed.com</p>
-                        <p className="text-green-400 font-medium">WhatsApp: +91 99999 99999</p>
+                        <p><a href="mailto:nanomedsales@gmail.com" className="pt-2 text-blue-400 font-medium">Email: nanomedsales@gmail.com</a></p>
+                        <p><a href="https://wa.me/917738281416" className="pt-2 text-green-400 font-medium">WhatsApp: +91 77382 81416</a></p>
                     </div>
                 </div>
 
