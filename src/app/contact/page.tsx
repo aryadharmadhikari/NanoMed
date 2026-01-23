@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import ContactForm from "../../components/ContactForm";
 
 export default function ContactPage() {
     return (
@@ -18,29 +19,8 @@ export default function ContactPage() {
                 {/* 2. Left Side: Contact Form */}
                 <div className="bg-gray-50 p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-                    <form className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-                                <input type="text" placeholder="Arya Dharmadhikari" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-                                <input type="tel" placeholder="+91 98XXX XXXXX" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition" />
-                            </div>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-                            <input type="email" placeholder="arya@example.com" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition" />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-700 mb-2">How can we help?</label>
-                            <textarea rows={4} placeholder="I am interested in the Pivot Explorer Stick..." className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"></textarea>
-                        </div>
-                        <button className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-                            Submit Inquiry
-                        </button>
-                    </form>
+                    <ContactForm />
+
                 </div>
 
                 {/* 3. Right Side: Contact Info & Map */}
