@@ -19,7 +19,7 @@ export const products: Product[] = [
         name: "Foldable Round Commode Chair with Pot Bucket & Handrest | Portable & Durable, Universal Size",
         price: 3499,
         category: "Commode Chairs",
-        image: "/images/products/350.jpg",
+        image: "/images/products/foldable-round-commode-chair.jpg",
     },
     {
         id: 3,
@@ -33,7 +33,7 @@ export const products: Product[] = [
         name: "Mild Steel Folding Shower Commode Stool - Mobile Toilet Seat for Elderly, Disabled, Pregnant Women",
         price: 2499,
         category: "Commode Chairs",
-        image: "/images/products/MS001.jpg",
+        image: "/images/products/commode-stool.jpg",
     },
     {
         id: 5,
