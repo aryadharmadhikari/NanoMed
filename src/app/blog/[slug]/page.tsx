@@ -1,4 +1,5 @@
 import { blogs } from "../../../data/blogs";
+import AuthorBadge from "../../../components/AuthorBadge";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -8,35 +9,35 @@ export default async function SingleBlogPost({
 }: {
     params: Promise<{ slug: string }>
 }) {
-    // 1. Unwrap the slug from the Promise (Next.js 15 requirement)
     const { slug } = await params;
-
-    // 2. Find the blog post that matches the slug
     const blog = blogs.find((b) => b.slug === slug);
 
-    // 3. Safety Check
     if (!blog) {
         notFound();
     }
 
     return (
-        <main className="min-h-screen bg-white pb-20">
-            {/* Article Header / Hero */}
-            <div className="bg-gray-50 py-16 px-6 border-b border-gray-100">
-                <div className="max-w-3xl mx-auto text-center">
-                    <Link href="/blog" className="text-blue-600 font-bold text-sm uppercase tracking-widest hover:underline">
-                        ← Back to Blog
-                    </Link>
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mt-6 leading-tight">
-                        {blog.title}
-                    </h1>
-                    <p className="text-gray-500 mt-4 font-medium">Published on {blog.date}</p>
+        <main className="min-h-screen bg-white pb-24">
+            {/* Header / Hero */}
+            <header className="pt-20 pb-16 px-6 max-w-4xl mx-auto text-center">
+                <div className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 mb-6 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span>{blog.category}</span>
                 </div>
-            </div>
 
-            <article className="max-w-3xl mx-auto px-6 mt-12">
-                {/* Main Image */}
-                <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-xl mb-12">
+                <h1 className="text-4xl md:text-5xl/tight font-extrabold text-gray-900 mb-8">
+                    {blog.title}
+                </h1>
+
+                <div className="flex items-center justify-center gap-8 text-gray-500 mb-10">
+                    <AuthorBadge author={blog.author} size="md" />
+                    <span className="text-sm font-medium">{blog.readTime}</span>
+                    <span className="text-sm font-medium">{blog.date}</span>
+                </div>
+            </header>
+
+            {/* Main Image */}
+            <div className="max-w-5xl mx-auto px-6 mb-16">
+                <div className="relative w-full aspect-[2/1] rounded-3xl overflow-hidden shadow-2xl">
                     <Image
                         src={blog.image}
                         alt={blog.title}
@@ -44,28 +45,50 @@ export default async function SingleBlogPost({
                         className="object-cover"
                     />
                 </div>
+            </div>
 
-                {/* Content Section */}
-                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
-                    <p className="text-xl font-medium text-gray-900 italic border-l-4 border-blue-600 pl-6 py-2 bg-blue-50/30">
+            <article className="max-w-3xl mx-auto px-6 relative">
+                {/* Social Share (Sticky Side - Mock) */}
+                <div className="hidden xl:flex flex-col gap-4 absolute -left-20 top-0">
+                    <button className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-twitter hover:text-blue-400 transition">
+                        {/* Icon */}
+                        <span className="sr-only">Share</span>
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" /></svg>
+                    </button>
+                    {/* Add more icons if needed */}
+                </div>
+
+                {/* Content */}
+                <div className="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+                    <p className="lead text-xl md:text-2xl font-medium text-gray-800 mb-8 border-l-4 border-blue-600 pl-6">
                         {blog.excerpt}
                     </p>
 
-                    {/* We split the content by new lines to create paragraphs */}
-                    {blog.content.split('\n').map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                    ))}
+                    {/* Main Content Render */}
+                    <div dangerouslySetInnerHTML={{ __html: blog.content }} />
                 </div>
 
-                {/* Bottom CTA */}
-                <div className="mt-16 p-8 bg-blue-600 rounded-2xl text-white text-center">
-                    <h3 className="text-2xl font-bold mb-2">Need professional advice?</h3>
-                    <p className="mb-6 opacity-90">Our team at Maruti Enterprises is here to help you choose the right equipment.</p>
-                    <Link
-                        href="/products"
-                        className="inline-block bg-white text-blue-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition"
-                    >
-                        Explore Catalog
+                {/* Tags / Footer */}
+                <div className="mt-16 pt-8 border-t border-gray-100">
+                    <div className="bg-gray-50 rounded-2xl p-8 flex items-center gap-6">
+                        <div className="relative w-20 h-20 shrink-0 rounded-full overflow-hidden border-4 border-white shadow-md">
+                            <Image src={blog.author.avatar} alt={blog.author.name} fill className="object-cover" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">About the Author</p>
+                            <h3 className="text-xl font-bold text-gray-900 leading-tight">
+                                {blog.author.name}
+                            </h3>
+                            <p className="text-gray-600 mt-2">
+                                {blog.author.bio}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="text-center mt-12">
+                    <Link href="/blog" className="text-blue-600 font-bold hover:underline">
+                        ← Back to all articles
                     </Link>
                 </div>
             </article>
