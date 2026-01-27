@@ -21,20 +21,20 @@ export interface BlogPost {
 }
 
 // Mock Authors
-const AUTHOR_DR_SHARMA: Author = {
-    id: "dr-sharma",
-    name: "Dr. Anjali Sharma",
-    role: "Senior Physiotherapist",
-    avatar: "https://placehold.co/100x100/png?text=AS",
-    bio: "Dr. Sharma has over 15 years of experience in geriatric physiotherapy and rehabilitation."
+const AUTHOR_HARSHIT_GUPTA: Author = {
+    id: "harshit-gupta",
+    name: "Harshit Gupta",
+    role: "Founder NanoMed",
+    avatar: "https://placehold.co/100x100/png?text=HG",
+    bio: "Harshit Gupta is the founder of NanoMed, a company that specializes in selling medical equipment to families. He has over 2 years of experience in medical equipment business."
 };
 
-const AUTHOR_RAJESH: Author = {
-    id: "rajesh-m",
-    name: "Rajesh Malhotra",
-    role: "Mobility Specialist",
+const AUTHOR_TEAM_NANOMED: Author = {
+    id: "aryad-dharmadhikari",
+    name: "NanoMed",
+    role: "Patient Care Team",
     avatar: "https://placehold.co/100x100/png?text=RM",
-    bio: "Rajesh helps families select the right medical equipment for home care setups."
+    bio: "NanoMed Patient Care Team helps families select the right medical equipment for home care setups."
 };
 
 export const blogs: BlogPost[] = [
@@ -42,15 +42,15 @@ export const blogs: BlogPost[] = [
         id: 1,
         slug: "choosing-the-right-walking-stick",
         title: "How to Choose the Right Walking Stick for the Elderly: A Complete Guide",
-        excerpt: "Stability is key when selecting mobility aids. Learn the critical factors—height, grip, and base type—that you must check before buying to prevent falls.",
+        excerpt: "\"Stability is key when selecting mobility aids.\" Learn the critical factors: height, grip, and base type — that you must check before buying to prevent falls.",
         date: "Jan 15, 2026",
         readTime: "6 min read",
-        image: "https://placehold.co/1200x800/png?text=Walking+Stick+Guide",
+        image: "/images/blogs/elder-woman-holding-cane-her-hands.jpg",
         category: "Guides",
-        author: AUTHOR_DR_SHARMA,
+        author: AUTHOR_HARSHIT_GUPTA,
         isFeatured: true,
         content: `
-            <p>Choosing a walking stick might seem simple, but for an elderly person, it is a decision that directly affects their safety and independence. The wrong stick can cause back pain, shoulder strain, or even lead to a fall. In this guide, we will break down exactly how to select the perfect mobility aid.</p>
+            <h3>Choosing a walking stick might seem simple, but for an elderly person, it is a decision that directly affects their safety and independence. The wrong stick can cause back pain, shoulder strain, or even lead to a fall. In this guide, we will break down exactly how to select the perfect mobility aid.</h3>
 
             <h3>1. The Importance of Correct Height</h3>
             <p>The most common mistake people make is buying a stick that is too high or too low. A stick that is too high forces you to hunch your shoulders, leading to neck pain. One that is too low causes you to stoop, straining your back.</p>
@@ -72,9 +72,9 @@ export const blogs: BlogPost[] = [
         excerpt: "Standard canes often fail to provide enough support for stroke survivors. medical experts explain why four legs are significantly safer than one.",
         date: "Jan 10, 2026",
         readTime: "4 min read",
-        image: "https://placehold.co/800x600/png?text=Quadripod+Benefits",
+        image: "/Images/blogs/elderly-man-holding-quadripod-stick.jpeg",
         category: "Health Tips",
-        author: AUTHOR_DR_SHARMA,
+        author: AUTHOR_HARSHIT_GUPTA,
         content: `
             <p>Stroke recovery involves relearning balance. A standard single-tip cane requires the user to have a fair amount of existing stability. For many stroke survivors, this isn't enough.</p>
             
@@ -94,9 +94,9 @@ export const blogs: BlogPost[] = [
         excerpt: "Hygiene and durability are vital for home medical equipment. Here is a simple checklist to keep your commode chair safe and sanitary.",
         date: "Jan 05, 2026",
         readTime: "3 min read",
-        image: "https://placehold.co/800x600/png?text=Maintenance+Tips",
+        image: "/images/blogs/disinfection-equipment-table.jpg",
         category: "Caregiving",
-        author: AUTHOR_RAJESH,
+        author: AUTHOR_TEAM_NANOMED,
         content: `
             <p>Commode chairs are essential for patients with limited mobility, but they require regular maintenance to ensure they remain safe and hygienic. Neglect can lead to rust, instability, or infection risks.</p>
 
@@ -116,9 +116,9 @@ export const blogs: BlogPost[] = [
         excerpt: "Don't let mobility challenges stop you from exploring. Here is how to pack and travel with walkers and wheelchairs.",
         date: "Dec 12, 2025",
         readTime: "5 min read",
-        image: "https://placehold.co/800x600/png?text=Travel+Checklist",
+        image: "/images/blogs/medium-shot-smiley-man-wheelchair.jpg",
         category: "Guides",
-        author: AUTHOR_RAJESH,
+        author: AUTHOR_TEAM_NANOMED,
         content: `
             <p>Traveling with medical equipment requires planning, but it is entirely possible. Whether you are flying or taking a train, here are some tips to make the journey smoother.</p>
             
