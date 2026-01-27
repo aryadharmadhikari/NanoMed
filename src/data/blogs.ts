@@ -72,7 +72,7 @@ export const blogs: BlogPost[] = [
         excerpt: "Standard canes often fail to provide enough support for stroke survivors. medical experts explain why four legs are significantly safer than one.",
         date: "Jan 10, 2026",
         readTime: "4 min read",
-        image: "/Images/blogs/elderly-man-holding-quadripod-stick.jpeg",
+        image: "/images/blogs/elderly-man-holding-quadripod-stick.jpeg",
         category: "Health Tips",
         author: AUTHOR_HARSHIT_GUPTA,
         content: `
