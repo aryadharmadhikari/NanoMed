@@ -1,22 +1,40 @@
 @import "tailwindcss";
 
-/* Smooth scrolling for when users click "View Catalog" */
+/* 1. Base Setup */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: #ffffff;
+  color: #111827;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Force specific Medical/Clean theme (Light Mode only) */
-body {
-  background-color: #ffffff;
-  /* Always White */
-  color: #111827;
-  /* Always Dark Gray (gray-900) */
-  font-family: Arial, Helvetica, sans-serif;
-  /* Safe Fallback */
+/* 2. Blog Typography (The "Prose" Fix) 
+   Tailwind's Preflight resets all headers to normal text. 
+   We define these styles inside .prose so they only affect blog content.
+*/
+.prose h1 {
+  @apply text-4xl font-extrabold mb-6 mt-10 text-gray-900;
+}
+
+.prose h2 {
+  @apply text-3xl font-bold mb-4 mt-8 text-gray-900;
+}
+
+.prose h3 {
+  @apply text-2xl font-bold mb-3 mt-6 text-gray-800;
+}
+
+.prose p {
+  @apply text-gray-700 leading-relaxed mb-4;
+}
+
+.prose strong {
+  @apply font-bold text-gray-900;
+}
+
+.prose ul {
+  @apply list-disc pl-6 mb-4 space-y-2;
 }
