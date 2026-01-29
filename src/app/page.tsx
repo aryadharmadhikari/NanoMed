@@ -19,23 +19,28 @@ export default function Home() {
       {/* 2. Bestselling Section (Social Proof & Trust) */}
       <section className="bg-gray-50 py-20 px-6 border-y border-gray-100">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
-                Bestselling Equipment
-              </h2>
-              <p className="text-gray-600 mt-2 text-lg">
-                Trusted by 500+ families across Maharashtra.
-              </p>
+          {/* Header: Centered Alignment */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+              Bestselling Equipment
+            </h2>
+            <p className="text-gray-500 mt-4 text-lg max-w-2xl mx-auto">
+              Trusted by 500+ families across Maharashtra.
+            </p>
+
+            {/* Action Button below with vertical space */}
+            <div className="mt-10">
+              <Link
+                href="/products"
+                className="group inline-flex items-center gap-2 bg-white border border-gray-200 px-8 py-3 rounded-full font-bold text-blue-600 hover:text-blue-700 hover:shadow-md transition-all whitespace-nowrap"
+              >
+                View Full Catalog
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </Link>
             </div>
-            <Link
-              href="/products"
-              className="text-blue-600 font-bold hover:text-blue-800 transition flex items-center gap-1"
-            >
-              View Full Catalog <span>→</span>
-            </Link>
           </div>
 
+          {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {bestsellingProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -45,7 +50,7 @@ export default function Home() {
       </section>
 
       {/* 3. Featured Selection (Highlighting Quality) */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
+      <section className="bg-blue-50/50 py-20 px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900">Featured Innovation</h2>
           <p className="text-gray-500 mt-2">Premium mobility solutions from NANOMED.</p>
