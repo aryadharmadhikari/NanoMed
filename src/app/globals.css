@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-red: #e40202;
+  --color-brand-teal: #2d8c8f;
+
+  --font-heading: var(--font-spartan);
+  --font-body: var(--font-manrope);
+}
+
 /* 1. Base Setup */
 html {
   scroll-behavior: smooth;
@@ -8,7 +16,18 @@ html {
 body {
   background-color: #ffffff;
   color: #111827;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), ui-sans-serif, system-ui;
+}
+
+/* Global Heading Style */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-spartan), sans-serif;
+  letter-spacing: -0.02em;
 }
 
 /* 2. Blog Typography (The "Prose" Fix) 
@@ -16,15 +35,15 @@ body {
    We define these styles inside .prose so they only affect blog content.
 */
 .prose h1 {
-  @apply text-4xl font-extrabold mb-6 mt-10 text-gray-900;
+  @apply text-4xl font-extrabold mb-6 mt-10 text-gray-900 font-heading;
 }
 
 .prose h2 {
-  @apply text-3xl font-bold mb-4 mt-8 text-gray-900;
+  @apply text-3xl font-bold mb-4 mt-8 text-gray-900 font-heading;
 }
 
 .prose h3 {
-  @apply text-2xl font-bold mb-3 mt-6 text-gray-800;
+  @apply text-2xl font-bold mb-3 mt-6 text-gray-800 font-heading;
 }
 
 .prose p {
