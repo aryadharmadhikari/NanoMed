@@ -6,13 +6,13 @@ export default function Hero() {
             <div className="max-w-7xl mx-auto px-6 text-center">
 
                 {/* Main Headline */}
-                <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                <h1 className="text-5xl md:text-7xl font-heading font-black text-gray-900 mb-6 tracking-tighter">
                     Restoring Mobility, <br />
-                    <span className="text-blue-600">Restoring Independence.</span>
+                    <span className="text-brand-teal">Restoring Independence.</span>
                 </h1>
 
                 {/* Sub-text */}
-                <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto font-body">
                     Premium Walkers, Commode Chairs, and Sticks designed for safety.
                     Built for the elderly, engineered for stability.
                 </p>
@@ -21,13 +21,13 @@ export default function Hero() {
                 <div className="flex flex-col md:flex-row gap-4 justify-center">
                     <Link
                         href="/products"
-                        className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                        className="bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition shadow-xl hover:shadow-red-200"
                     >
                         View Catalog
                     </Link>
                     <Link
                         href="/about"
-                        className="bg-white text-gray-700 border border-gray-300 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
+                        className="bg-white text-brand-teal border border-brand-teal/20 px-10 py-4 rounded-full font-bold text-lg hover:bg-teal-50 transition"
                     >
                         About Us
                     </Link>

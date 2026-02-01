@@ -1,8 +1,9 @@
-"use client"; // Required because we are using State (interactivity)
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,21 +21,28 @@ export default function Navbar() {
         <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex justify-between items-center h-20">
-                    {/* LEFT: Logo */}
-                    <div className="text-2xl font-bold text-blue-600">
-                        <Link href="/">NANOMED</Link>
-                    </div>
+                    {/* LEFT: Logo Image */}
+                    <Link href="/" className="flex items-center">
+                        <Image
+                            src="/images/NanoMed-Logo-Horizontal.png"
+                            alt="NanoMed Logo"
+                            width={2048}
+                            height={1024}
+                            className="h-10 w-auto object-contain"
+                            priority
+                        />
+                    </Link>
 
                     {/* 2. Desktop Menu (Hidden on Mobile) */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link href="/" className="text-gray-600 hover:text-blue-600 font-medium transition">Home</Link>
-                        <Link href="/products" className="text-gray-600 hover:text-blue-600 font-medium transition">Products</Link>
-                        <Link href="/blog" className="text-gray-600 hover:text-blue-600 font-medium transition">Blog</Link>
-                        <Link href="/about" className="text-gray-600 hover:text-blue-600 font-medium transition">About Us</Link>
-                        <Link href="/contact" className="text-gray-600 hover:text-blue-600 font-medium transition">Contact Us</Link>
+                        <Link href="/" className="text-gray-600 hover:text-brand-teal font-medium transition">Home</Link>
+                        <Link href="/products" className="text-gray-600 hover:text-brand-teal font-medium transition">Products</Link>
+                        <Link href="/blog" className="text-gray-600 hover:text-brand-teal font-medium transition">Blog</Link>
+                        <Link href="/about" className="text-gray-600 hover:text-brand-teal font-medium transition">About Us</Link>
+                        <Link href="/contact" className="text-gray-600 hover:text-brand-teal font-medium transition">Contact Us</Link>
                         <Link
                             href="/products"
-                            className="bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-blue-700 transition"
+                            className="bg-brand-teal text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-teal-700 transition"
                         >
                             Order Now
                         </Link>
@@ -99,7 +107,7 @@ export default function Navbar() {
                     <Link
                         href="/products"
                         onClick={() => setIsOpen(false)}
-                        className="block w-full text-center bg-blue-600 text-white py-4 rounded-xl font-bold"
+                        className="block w-full text-center bg-brand-teal text-white py-4 rounded-xl font-bold shadow-lg"
                     >
                         Order Now
                     </Link>
