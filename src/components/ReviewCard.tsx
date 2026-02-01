@@ -32,13 +32,13 @@ export default function ReviewCard({ review }: { review: Review }) {
             </div>
 
             {/* 2. The Review Content */}
-            <p className="text-gray-700 leading-relaxed mb-8 flex-1 italic">
+            <p className="text-gray-700 leading-relaxed mb-8 flex-1 italic font-body">
                 "{review.comment}"
             </p>
 
             {/* 3. Footer: User Info */}
             <div className="flex items-center gap-4 pt-6 border-t border-gray-50">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-brand-teal/10 flex items-center justify-center text-brand-teal font-bold text-lg">
                     {review.name.charAt(0)}
                 </div>
                 <div>

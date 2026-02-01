@@ -22,50 +22,50 @@ export default function ContactForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
+                    <label className="block text-lg font-heading font-bold text-gray-700 mb-2">Full Name</label>
                     <input
                         name="name"
                         type="text"
                         required
                         placeholder="Arya Dharmadhikari"
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-teal focus:border-transparent outline-none transition font-body"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
+                    <label className="block text-lg font-heading font-bold text-gray-700 mb-2">Phone Number</label>
                     <input
                         name="phone"
                         type="tel"
                         required
                         placeholder="+91 98XXX XXXXX"
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-teal focus:border-transparent outline-none transition font-body"
                     />
                 </div>
             </div>
             <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+                <label className="block text-lg font-heading font-bold text-gray-700 mb-2">Email Address</label>
                 <input
                     name="email"
                     type="email"
                     required
                     placeholder="arya@example.com"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-teal focus:border-transparent outline-none transition font-body"
                 />
             </div>
             <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">How can we help?</label>
+                <label className="block text-lg font-heading font-bold text-gray-700 mb-2">How can we help?</label>
                 <textarea
                     name="message"
                     rows={4}
                     required
                     placeholder="I am interested in the Pivot Explorer Stick..."
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-brand-teal focus:border-transparent outline-none transition font-body"
                 ></textarea>
             </div>
             <button
                 type="submit"
                 disabled={isPending}
-                className={`w-full text-white font-bold py-4 rounded-xl transition shadow-lg shadow-blue-200 flex justify-center items-center ${isPending ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                className={`w-full text-xl text-white font-heading font-bold py-4 rounded-xl transition shadow-lg flex justify-center items-center ${isPending ? "bg-teal-300 cursor-not-allowed" : "bg-brand-teal hover:bg-teal-700 hover:shadow-teal-100"
                     }`}
             >
                 {isPending ? (
