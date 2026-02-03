@@ -17,7 +17,7 @@ export default function Footer() {
                             className="h-42 w-auto object-contain brightness-110"
                         />
                     </Link>
-                    <p className="text-md leading-relaxed">
+                    <p className="text-sm leading-relaxed">
                         A premium brand by Maruti Enterprises. Dedicated to enhancing
                         mobility and independence through high-quality healthcare equipment.
                     </p>
@@ -25,8 +25,8 @@ export default function Footer() {
 
                 {/* Column 2: Quick Links */}
                 <div>
-                    <h4 className="text-white font-heading font-bold mb-6 uppercase tracking-wider text-lg">Quick Links</h4>
-                    <ul className="space-y-4 text-md">
+                    <h4 className="text-white font-heading font-bold mb-6 uppercase tracking-wider text-md">Quick Links</h4>
+                    <ul className="space-y-4 text-sm">
                         <li><Link href="/" className="hover:text-brand-teal transition">Home</Link></li>
                         <li><Link href="/products" className="hover:text-brand-teal transition">Product Catalog</Link></li>
                         <li><Link href="/blog" className="hover:text-brand-teal transition">Blog</Link></li>
@@ -37,8 +37,8 @@ export default function Footer() {
 
                 {/* Column 3: Trust Factors */}
                 <div>
-                    <h4 className="text-white font-heading font-bold mb-6 uppercase tracking-wider text-lg">Why Choose Us</h4>
-                    <ul className="space-y-4 text-md">
+                    <h4 className="text-white font-heading font-bold mb-6 uppercase tracking-wider text-md">Why Choose Us</h4>
+                    <ul className="space-y-4 text-sm">
                         <li className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-brand-teal"></span>
                             Quality Certified
@@ -56,8 +56,8 @@ export default function Footer() {
 
                 {/* Column 4: Contact Info */}
                 <div>
-                    <h4 className="text-white font-heading font-bold mb-6 uppercase tracking-wider text-lg">Contact Us</h4>
-                    <div className="text-md space-y-4">
+                    <h4 className="text-white font-heading font-bold mb-6 uppercase tracking-wider text-md">Contact Us</h4>
+                    <div className="text-sm space-y-4">
                         <p className="text-gray-200 font-medium">Maruti Enterprises</p>
                         <p>Mumbai, Maharashtra</p>
                         <p><a href="mailto:nanomedsales@gmail.com" className="text-brand-teal hover:underline font-bold">nanomedsales@gmail.com</a></p>
