@@ -17,6 +17,13 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "NanoMed",
+  description: "Recovery deserves care, comfort, and confidence.",
+};
+
 export default function RootLayout({
   children,
 }: {
