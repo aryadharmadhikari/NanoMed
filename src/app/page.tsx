@@ -35,10 +35,9 @@ export default function Home() {
             <div className="mt-10">
               <Link
                 href="/products"
-                className="group inline-flex items-center gap-2 bg-white border border-gray-200 px-8 py-3 rounded-full font-bold text-blue-600 hover:text-blue-700 hover:shadow-md transition-all whitespace-nowrap"
+                className="inline-block bg-white border border-gray-200 px-8 py-3 rounded-full font-semibold text-gray-700 hover:bg-gray-50 transition shadow-sm"
               >
                 View Full Catalog
-                <span className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
             </div>
           </div>

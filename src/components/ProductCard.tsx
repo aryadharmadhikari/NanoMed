@@ -20,7 +20,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
             {/* Product Details */}
             <div className="p-6">
-                <p className="text-sm text-brand-teal font-bold uppercase tracking-wide">
+                <p className="text-sm text-brand-teal font-bold uppercase tracking-wide font-body">
                     {product.category}
                 </p>
                 <h3 className="text-xl font-heading font-bold text-gray-900 mt-2">
@@ -32,7 +32,7 @@ export default function ProductCard({ product }: { product: Product }) {
                     </span>
                     <Link
                         href={`/products/${product.id}`}
-                        className="bg-brand-teal text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-teal-700 transition text-center shadow-md hover:shadow-teal-100"
+                        className="bg-brand-teal text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-teal-700 transition text-center shadow-md hover:shadow-teal-100 font-body"
                     >
                         View Details
                     </Link>

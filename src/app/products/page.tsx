@@ -16,10 +16,10 @@ function ProductList() {
 
     return (
         <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-heading font-bold text-gray-900 mb-2">
                 {query ? `Search results for "${query}"` : "Our Catalog"}
             </h1>
-            <p className="text-gray-600 mb-8">
+            <p className="text-gray-600 mb-8 font-body">
                 {filteredProducts.length} items found
             </p>
 
@@ -31,10 +31,10 @@ function ProductList() {
                 </div>
             ) : (
                 <div className="text-center py-20">
-                    <p className="text-xl text-gray-500">No products match your search.</p>
+                    <p className="text-xl text-gray-500 font-body">No products match your search.</p>
                     <button
                         onClick={() => window.location.href = '/products'}
-                        className="mt-4 text-blue-600 font-bold hover:underline"
+                        className="mt-4 text-brand-teal font-bold hover:underline font-body"
                     >
                         Clear search
                     </button>

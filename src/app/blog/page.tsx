@@ -15,10 +15,10 @@ export default function BlogListingPage() {
             {/* Header / Intro */}
             <div className="bg-gray-50 border-b border-gray-100 py-20 px-6">
                 <div className="max-w-7xl mx-auto text-center">
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+                    <h1 className="text-4xl md:text-5xl font-heading font-extrabold text-gray-900 tracking-tight mb-4">
                         Health & Mobility Insights
                     </h1>
-                    <p className="text-xl text-gray-500 max-w-2xl mx-auto">
+                    <p className="text-xl text-gray-500 max-w-2xl mx-auto font-body">
                         Expert guidance on choosing the right equipment, caregiving tips, and product innovations.
                     </p>
                 </div>
@@ -27,14 +27,14 @@ export default function BlogListingPage() {
             {/* Featured Article Section */}
             <section className="max-w-7xl mx-auto px-6 -mt-10 mb-20">
                 <div className="bg-white rounded-3xl p-2 shadow-xl border border-gray-100">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-gray-900 rounded-2xl overflow-hidden text-white p-8 md:p-12 relative">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-brand-teal rounded-2xl overflow-hidden text-white p-8 md:p-12 relative">
                         {/* Background decoration or image could go here, but we'll stick to a clean dark layout or use the image on the right */}
 
                         <div className="relative z-10 order-2 lg:order-1">
-                            <span className="inline-block px-3 py-1 rounded-full bg-blue-600 text-xs font-bold uppercase tracking-wider mb-6">
+                            <span className="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider mb-6 font-body border border-white/20">
                                 Featured Guide
                             </span>
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 leading-tight">
                                 {featuredBlog.title}
                             </h2>
                             <p className="text-gray-300 text-lg mb-8 leading-relaxed line-clamp-3">
@@ -58,7 +58,7 @@ export default function BlogListingPage() {
 
                             <Link
                                 href={`/blog/${featuredBlog.slug}`}
-                                className="inline-block bg-white text-gray-900 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition"
+                                className="inline-block bg-white text-brand-teal px-8 py-3 rounded-full font-bold hover:bg-teal-50 transition font-body"
                             >
                                 Read Article
                             </Link>
@@ -79,7 +79,7 @@ export default function BlogListingPage() {
             {/* Main Grid */}
             <section className="max-w-7xl mx-auto px-6 pb-24">
                 <div className="flex items-center justify-between mb-10">
-                    <h2 className="text-2xl font-bold text-gray-900">Latest Articles</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900">Latest Articles</h2>
 
                     {/* Categories (Mock for now, easy to make functional later) */}
                     <div className="hidden md:flex gap-4">

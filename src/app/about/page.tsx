@@ -58,7 +58,7 @@ export default function AboutPage() {
             <section className="py-20 px-6">
                 <div className="max-w-3xl mx-auto text-center">
                     <div className="inline-block bg-brand-teal w-16 h-1 mb-8 rounded-full"></div>
-                    <p className="text-xl md:text-2xl text-gray-800 font-heading font-medium leading-relaxed italic">
+                    <p className="text-xl md:text-2xl text-gray-800 font-body font-medium leading-relaxed italic">
                         "NanoMed exists to support better recovery journeys—quietly, reliably, and with purpose."
                     </p>
                     <p className="mt-8 text-gray-500 font-body">

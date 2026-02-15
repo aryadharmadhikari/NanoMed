@@ -22,7 +22,7 @@ export default function ContactForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label className="block text-lg font-heading font-bold text-gray-700 mb-2">Full Name</label>
+                    <label className="block text-lg font-bold text-gray-700 mb-2">Full Name</label>
                     <input
                         name="name"
                         type="text"
@@ -32,7 +32,7 @@ export default function ContactForm() {
                     />
                 </div>
                 <div>
-                    <label className="block text-lg font-heading font-bold text-gray-700 mb-2">Phone Number</label>
+                    <label className="block text-lg font-bold text-gray-700 mb-2">Phone Number</label>
                     <input
                         name="phone"
                         type="tel"
@@ -43,7 +43,7 @@ export default function ContactForm() {
                 </div>
             </div>
             <div>
-                <label className="block text-lg font-heading font-bold text-gray-700 mb-2">Email Address</label>
+                <label className="block text-lg font-bold text-gray-700 mb-2">Email Address</label>
                 <input
                     name="email"
                     type="email"
@@ -53,7 +53,7 @@ export default function ContactForm() {
                 />
             </div>
             <div>
-                <label className="block text-lg font-heading font-bold text-gray-700 mb-2">How can we help?</label>
+                <label className="block text-lg font-bold text-gray-700 mb-2">How can we help?</label>
                 <textarea
                     name="message"
                     rows={4}
@@ -65,7 +65,7 @@ export default function ContactForm() {
             <button
                 type="submit"
                 disabled={isPending}
-                className={`w-full text-xl text-white font-heading font-bold py-4 rounded-xl transition shadow-lg flex justify-center items-center ${isPending ? "bg-teal-300 cursor-not-allowed" : "bg-brand-teal hover:bg-teal-700 hover:shadow-teal-100"
+                className={`w-full text-xl text-white font-bold py-4 rounded-xl transition shadow-lg flex justify-center items-center ${isPending ? "bg-teal-300 cursor-not-allowed" : "bg-brand-teal hover:bg-teal-700 hover:shadow-teal-100"
                     }`}
             >
                 {isPending ? (

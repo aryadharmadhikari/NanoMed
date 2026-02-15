@@ -30,7 +30,7 @@ export default async function SingleProductPage({
     return (
         <main className="min-h-screen bg-white">
             <div className="max-w-7xl mx-auto px-6 py-12">
-                <Link href="/products" className="text-gray-500 hover:text-blue-600 transition flex items-center gap-2 mb-12 font-medium">
+                <Link href="/products" className="text-gray-500 hover:text-brand-teal transition flex items-center gap-2 mb-12 font-medium font-body">
                     ← Back to Medical Catalog
                 </Link>
 
@@ -52,22 +52,22 @@ export default async function SingleProductPage({
 
                     {/* RIGHT: Product Details */}
                     <div className="flex flex-col">
-                        <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                        <h1 className="text-3xl md:text-5xl font-heading font-extrabold text-gray-900 leading-tight">
                             {product.name}
                         </h1>
 
-                        <div className="flex items-center gap-4 mt-6 text-2xl md:text-4xl font-black text-blue-600">
+                        <div className="flex items-center gap-4 mt-6 text-2xl md:text-4xl font-body font-black text-brand-teal">
                             ₹{product.price.toLocaleString("en-IN")}
-                            <span className="text-sm font-medium text-gray-400 bg-gray-100 px-3 py-1 rounded-lg">Incl. of all taxes</span>
+                            <span className="text-sm font-medium font-body text-gray-400 bg-gray-100 px-3 py-1 rounded-lg">Incl. of all taxes</span>
                         </div>
 
                         {/* Ideal For Tags */}
                         {product.idealFor && (
                             <div className="mt-8">
-                                <p className="text-xs font-bold uppercase text-gray-400 tracking-wider mb-3">Best Suited For</p>
+                                <p className="text-xs font-body font-bold uppercase text-gray-400 tracking-wider mb-3">Best Suited For</p>
                                 <div className="flex flex-wrap gap-2">
                                     {product.idealFor.map(tag => (
-                                        <span key={tag} className="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold border border-blue-100">
+                                        <span key={tag} className="bg-brand-teal/10 text-brand-teal px-4 py-1.5 rounded-full text-sm font-semibold border border-brand-teal/20 font-body">
                                             {tag}
                                         </span>
                                     ))}

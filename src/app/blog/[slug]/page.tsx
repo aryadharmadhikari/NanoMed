@@ -20,11 +20,11 @@ export default async function SingleBlogPost({
         <main className="min-h-screen bg-white pb-24">
             {/* Header / Hero */}
             <header className="pt-20 pb-16 px-6 max-w-4xl mx-auto text-center">
-                <div className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 mb-6 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                <div className="inline-flex items-center gap-2 text-sm font-body font-bold text-brand-teal mb-6 bg-brand-teal/10 px-3 py-1 rounded-full uppercase tracking-wider">
                     <span>{blog.category}</span>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl/tight font-extrabold text-gray-900 mb-8">
+                <h1 className="text-4xl md:text-5xl/tight font-heading font-extrabold text-gray-900 mb-8">
                     {blog.title}
                 </h1>
 
@@ -59,8 +59,8 @@ export default async function SingleBlogPost({
                 </div>
 
                 {/* Content */}
-                <div className="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
-                    <p className="lead text-xl md:text-2xl font-medium text-gray-800 mb-8 border-l-4 border-blue-600 pl-6">
+                <div className="prose prose-lg prose-teal max-w-none text-gray-700 leading-relaxed font-body">
+                    <p className="lead text-xl md:text-2xl font-medium text-gray-800 mb-8 border-l-4 border-brand-teal pl-6 font-body italic">
                         {blog.excerpt}
                     </p>
 
@@ -75,8 +75,8 @@ export default async function SingleBlogPost({
                             <Image src={blog.author.avatar} alt={blog.author.name} fill className="object-cover" />
                         </div>
                         <div>
-                            <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">About the Author</p>
-                            <h3 className="text-xl font-bold text-gray-900 leading-tight">
+                            <p className="text-xs font-bold text-brand-teal uppercase tracking-wider mb-1 font-body">About the Author</p>
+                            <h3 className="text-xl font-bold font-heading text-gray-900 leading-tight">
                                 {blog.author.name}
                             </h3>
                             <p className="text-gray-600 mt-2">
@@ -87,7 +87,7 @@ export default async function SingleBlogPost({
                 </div>
 
                 <div className="text-center mt-12">
-                    <Link href="/blog" className="text-blue-600 font-bold hover:underline">
+                    <Link href="/blog" className="text-brand-teal font-bold hover:underline font-body">
                         ← Back to all articles
                     </Link>
                 </div>
