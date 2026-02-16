@@ -44,7 +44,7 @@ export default async function SingleProductPage({
                                 fill
                                 className="object-contain p-12 transition-transform duration-500 group-hover:scale-105"
                             />
-                            <div className="absolute top-6 left-6 bg-white/90 backdrop-blur shadow-sm px-4 py-1 rounded-full text-xs font-bold text-blue-700">
+                            <div className="absolute top-6 left-6 bg-white/90 backdrop-blur shadow-sm px-4 py-1 rounded-full text-xs font-bold text-brand-teal font-body">
                                 {product.category}
                             </div>
                         </div>
@@ -108,7 +108,7 @@ export default async function SingleProductPage({
                     <section className="mt-32 pt-16 border-t border-gray-100">
                         <div className="flex justify-between items-end mb-10">
                             <div>
-                                <h2 className="text-3xl font-bold text-gray-900">Recommended Alternatives</h2>
+                                <h2 className="text-3xl font-bold font-heading text-gray-900">Recommended Alternatives</h2>
                                 <p className="text-gray-500 mt-2">More {product.category} solutions for your needs.</p>
                             </div>
                         </div>
