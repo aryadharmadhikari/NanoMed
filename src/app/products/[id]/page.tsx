@@ -56,10 +56,22 @@ export default async function SingleProductPage({
                             {product.name}
                         </h1>
 
-                        <div className="flex items-center gap-4 mt-6 text-2xl md:text-4xl font-body font-black text-brand-teal">
-                            ₹{product.price.toLocaleString("en-IN")}
-                            <span className="text-sm font-medium font-body text-gray-400 bg-gray-100 px-3 py-1 rounded-lg">Incl. of all taxes</span>
+                        <div className="flex items-end gap-3 mt-6">
+                            <span className="text-4xl md:text-5xl font-body font-black text-brand-teal">
+                                ₹{product.price.toLocaleString("en-IN")}
+                            </span>
+                            {product.mrp && product.mrp > product.price && (
+                                <div className="flex items-center gap-2 mb-0.5">
+                                    <span className="text-xl text-gray-500 line-through font-body">
+                                        ₹{product.mrp.toLocaleString("en-IN")}
+                                    </span>
+                                    <span className="text-lg font-bold text-brand-red font-body">
+                                        {Math.round(((product.mrp - product.price) / product.mrp) * 100)}% OFF
+                                    </span>
+                                </div>
+                            )}
                         </div>
+                        <p className="text-sm font-medium font-body text-gray-400 mt-2">Inclusive of all taxes</p>
 
                         {/* Ideal For Tags */}
                         {product.idealFor && (

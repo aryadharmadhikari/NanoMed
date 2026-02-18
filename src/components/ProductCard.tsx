@@ -26,13 +26,25 @@ export default function ProductCard({ product }: { product: Product }) {
                 <h3 className="text-xl font-heading font-bold text-gray-900 mt-2">
                     {product.name}
                 </h3>
-                <div className="flex justify-between items-center mt-4">
-                    <span className="text-2xl font-bold text-gray-900">
-                        ₹{product.price.toLocaleString("en-IN")} {/* Formats 1200 to 1,200 */}
-                    </span>
+                <div className="flex flex-col items-start gap-1 mt-4">
+                    <div className="flex items-center gap-2">
+                        <span className="text-xl font-bold text-brand-teal font-body">
+                            ₹{product.price.toLocaleString("en-IN")}
+                        </span>
+                        {product.mrp && product.mrp > product.price && (
+                            <div className="flex items-center gap-2">
+                                <span className="text-xs text-gray-400 line-through font-body">
+                                    ₹{product.mrp.toLocaleString("en-IN")}
+                                </span>
+                                <span className="text-xs font-bold text-brand-red font-body">
+                                    {Math.round(((product.mrp - product.price) / product.mrp) * 100)}% OFF
+                                </span>
+                            </div>
+                        )}
+                    </div>
                     <Link
                         href={`/products/${product.id}`}
-                        className="bg-brand-teal text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-teal-700 transition text-center shadow-md hover:shadow-teal-100 font-body"
+                        className="w-full bg-brand-teal text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-teal-700 transition text-center shadow-md hover:shadow-teal-100 font-body block mt-2"
                     >
                         View Details
                     </Link>
