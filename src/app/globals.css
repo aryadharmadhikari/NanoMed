@@ -9,9 +9,6 @@
 }
 
 /* 1. Base Setup */
-html {
-  scroll-behavior: smooth;
-}
 
 body {
   background-color: #ffffff;
