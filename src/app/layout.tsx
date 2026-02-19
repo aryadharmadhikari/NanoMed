@@ -20,8 +20,30 @@ const manrope = Manrope({
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "NanoMed",
-  description: "Recovery deserves care, comfort, and confidence.",
+  metadataBase: new URL('https://nanomed.in'), // Update with actual domain
+  title: {
+    default: "NanoMed | Premium Medical Equipment for Home Care",
+    template: "%s | NanoMed"
+  },
+  description: "NanoMed provides high-quality medical equipment designed for dignity and comfort. Shop mobility aids, commode chairs, and more with free shipping in Mumbai.",
+  keywords: ["medical equipment", "elderly care", "mobility aids", "wheelchairs", "walking sticks", "commode chairs", "home healthcare", "mumbai"],
+  openGraph: {
+    title: "NanoMed | Premium Medical Equipment",
+    description: "Recovery deserves care, comfort, and confidence. Discover our range of elderly care products.",
+    url: 'https://nanomed.in',
+    siteName: 'NanoMed',
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "NanoMed | Premium Medical Equipment",
+    description: "Recovery deserves care, comfort, and confidence.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
