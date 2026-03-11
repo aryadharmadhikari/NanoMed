@@ -1,7 +1,7 @@
 import React from "react";
-import { Review } from "../data/reviews";
+import { DatabaseReview } from "../types/database";
 
-export default function ReviewCard({ review }: { review: Review }) {
+export default function ReviewCard({ review }: { review: DatabaseReview }) {
     // Logic: Create an array of 5 for the stars
     const stars = Array.from({ length: 5 }, (_, i) => i + 1);
 
@@ -38,7 +38,7 @@ export default function ReviewCard({ review }: { review: Review }) {
 
             {/* 3. Footer: User Info */}
             <div className="flex items-center gap-4 pt-6 border-t border-gray-50">
-                <div className="w-12 h-12 rounded-full bg-brand-teal/10 flex items-center justify-center text-brand-teal font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-brand-teal/10 flex items-center justify-center text-brand-teal font-bold text-lg text-center leading-none">
                     {review.name.charAt(0)}
                 </div>
                 <div>

@@ -2,17 +2,40 @@ import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import BlogCard from "../components/BlogCard";
 import ReviewCard from "../components/ReviewCard";
-import { products } from "../data/products";
-import { blogs } from "../data/blogs";
-import { reviews } from "../data/reviews";
+import { supabase } from "../lib/supabase";
+import { DatabaseProduct, DatabaseBlog, DatabaseReview } from "../types/database";
 import Link from "next/link";
 
-export default function Home() {
-  // Logic: Get specific sets of data for different sections
-  const bestsellingProducts = products.slice(0, 4); // Top 4 for the gray section
-  const featuredProducts = products.slice(0, 3);    // 3 different ones for the white section
-  const latestBlogs = blogs.slice(0, 3);            // Latest 3 articles
-  const homeReviews = reviews.slice(0, 3);          // Top 3 reviews for homepage
+export default async function Home() {
+  // 1. Fetch Bestselling Products (Top 4)
+  const { data: bestsellingData } = await supabase
+    .from('products')
+    .select('*, product_categories(name)')
+    .limit(4);
+  
+  // 2. Fetch Featured Selection (3 items)
+  const { data: featuredData } = await supabase
+    .from('products')
+    .select('*, product_categories(name)')
+    .range(4, 6); // Just get the next 3 for variety
+
+  // 3. Fetch Latest Blogs (3 articles)
+  const { data: latestBlogsData } = await supabase
+    .from('blogs')
+    .select('*, blog_categories(name), authors(*)')
+    .order('date', { ascending: false })
+    .limit(3);
+
+  // 4. Fetch Home Reviews (3 reviews)
+  const { data: homeReviewsData } = await supabase
+    .from('reviews')
+    .select('*')
+    .limit(3);
+
+  const bestsellingProducts = (bestsellingData || []) as DatabaseProduct[];
+  const featuredProducts = (featuredData || []) as DatabaseProduct[];
+  const latestBlogs = (latestBlogsData || []) as DatabaseBlog[];
+  const homeReviews = (homeReviewsData || []) as DatabaseReview[];
 
   return (
     <main className="min-h-screen bg-white">
