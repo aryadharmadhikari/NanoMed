@@ -1,4 +1,5 @@
-import { products } from "../../../data/products";
+import { supabase } from "../../../lib/supabase";
+import { DatabaseProduct } from "../../../types/database";
 import ProductSpecs from "../../../components/ProductSpecs";
 import ProductCard from "../../../components/ProductCard";
 import Image from "next/image";
@@ -11,16 +12,30 @@ export default async function SingleProductPage({
     params: Promise<{ id: string }>
 }) {
     const { id } = await params;
-    const product = products.find((p) => p.id === parseInt(id));
 
-    if (!product) {
+    // 1. Fetch main product with category info
+    const { data: productData, error } = await supabase
+        .from('products')
+        .select('*, product_categories(name)')
+        .eq('id', id)
+        .single();
+
+    if (error || !productData) {
+        console.error("Error fetching product:", error);
         notFound();
     }
 
-    // Related Products Logic: Same category, excluding current product
-    const relatedProducts = products
-        .filter((p) => p.category === product.category && p.id !== product.id)
-        .slice(0, 4);
+    const product = productData as DatabaseProduct;
+
+    // 2. Fetch Related Products: Same category_id, excluding current product
+    const { data: relatedData } = await supabase
+        .from('products')
+        .select('*, product_categories(name)')
+        .eq('category_id', product.category_id)
+        .neq('id', product.id)
+        .limit(4);
+
+    const relatedProducts = (relatedData || []) as DatabaseProduct[];
 
     // Setup WhatsApp details
     const whatsappNumber = "917738281416";
@@ -45,7 +60,7 @@ export default async function SingleProductPage({
                                 className="object-contain p-12 transition-transform duration-500 group-hover:scale-105"
                             />
                             <div className="absolute top-6 left-6 bg-white/90 backdrop-blur shadow-sm px-4 py-1 rounded-full text-xs font-bold text-brand-teal font-body">
-                                {product.category}
+                                {product.product_categories?.name || "General"}
                             </div>
                         </div>
                     </div>
@@ -74,11 +89,11 @@ export default async function SingleProductPage({
                         <p className="text-sm font-medium font-body text-gray-400 mt-2">Inclusive of all taxes</p>
 
                         {/* Ideal For Tags */}
-                        {product.idealFor && (
+                        {product.ideal_for && product.ideal_for.length > 0 && (
                             <div className="mt-8">
                                 <p className="text-xs font-body font-bold uppercase text-gray-400 tracking-wider mb-3">Best Suited For</p>
                                 <div className="flex flex-wrap gap-2">
-                                    {product.idealFor.map(tag => (
+                                    {product.ideal_for.map(tag => (
                                         <span key={tag} className="bg-brand-teal/10 text-brand-teal px-4 py-1.5 rounded-full text-sm font-semibold border border-brand-teal/20 font-body">
                                             {tag}
                                         </span>
@@ -121,7 +136,7 @@ export default async function SingleProductPage({
                         <div className="flex justify-between items-end mb-10">
                             <div>
                                 <h2 className="text-3xl font-bold font-heading text-gray-900">Recommended Alternatives</h2>
-                                <p className="text-gray-500 mt-2">More {product.category} solutions for your needs.</p>
+                                <p className="text-gray-500 mt-2">More {product.product_categories?.name || "Medical"} solutions for your needs.</p>
                             </div>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
