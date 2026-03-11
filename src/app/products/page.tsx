@@ -1,18 +1,52 @@
 "use client"
 import { useSearchParams } from "next/navigation";
-import { products } from "../../data/products";
-import ProductCard from "../../components/ProductCard";
-import { Suspense } from "react"; // 1. Import Suspense
+import { useEffect, useState, Suspense } from "react";
+import { supabase } from "@/lib/supabase";
+import { DatabaseProduct } from "@/types/database";
+import ProductCard from "@/components/ProductCard";
 
-// 2. Move your logic into a separate internal component
 function ProductList() {
     const searchParams = useSearchParams();
     const query = searchParams.get("query")?.toLowerCase() || "";
+    
+    const [products, setProducts] = useState<DatabaseProduct[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function fetchProducts() {
+            setLoading(true);
+            try {
+                // Fetch products with their category name
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*, product_categories(name)');
+                
+                if (error) throw error;
+                setProducts(data as any);
+            } catch (err: any) {
+                console.error("Error fetching products:", err);
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchProducts();
+    }, []);
 
     const filteredProducts = products.filter((product) =>
         product.name.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query)
+        product.product_categories?.name.toLowerCase().includes(query)
     );
+
+    if (loading) {
+        return <div className="text-center py-20 font-body">Loading our catalog...</div>;
+    }
+
+    if (error) {
+        return <div className="text-center py-20 text-red-500 font-body">Error loading products: {error}</div>;
+    }
 
     return (
         <div className="max-w-7xl mx-auto">
@@ -26,7 +60,7 @@ function ProductList() {
             {filteredProducts.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {filteredProducts.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product.id} product={product as any} />
                     ))}
                 </div>
             ) : (
@@ -44,7 +78,6 @@ function ProductList() {
     );
 }
 
-// 3. The main Page export just wraps the list in Suspense
 export default function ProductsPage() {
     return (
         <main className="min-h-screen bg-white py-12 px-6">
