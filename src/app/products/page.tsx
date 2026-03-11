@@ -1,9 +1,9 @@
 "use client"
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
-import { supabase } from "@/lib/supabase";
-import { DatabaseProduct } from "@/types/database";
-import ProductCard from "@/components/ProductCard";
+import { supabase } from "../../lib/supabase";
+import { DatabaseProduct } from "../../types/database";
+import ProductCard from "../../components/ProductCard";
 
 function ProductList() {
     const searchParams = useSearchParams();
@@ -22,6 +22,8 @@ function ProductList() {
                     .from('products')
                     .select('*, product_categories(name)');
                 
+                console.log("Supabase Fetch Result:", { data, error });
+                
                 if (error) throw error;
                 setProducts(data as any);
             } catch (err: any) {
@@ -35,10 +37,11 @@ function ProductList() {
         fetchProducts();
     }, []);
 
-    const filteredProducts = products.filter((product) =>
-        product.name.toLowerCase().includes(query) ||
-        product.product_categories?.name.toLowerCase().includes(query)
-    );
+    const filteredProducts = products.filter((product) => {
+        const nameMatch = product.name?.toLowerCase().includes(query);
+        const categoryMatch = product.product_categories?.name?.toLowerCase().includes(query);
+        return nameMatch || categoryMatch;
+    });
 
     if (loading) {
         return <div className="text-center py-20 font-body">Loading our catalog...</div>;

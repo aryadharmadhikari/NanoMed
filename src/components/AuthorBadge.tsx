@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { Author } from "../data/blogs";
+import { DatabaseAuthor } from "../types/database";
 
 interface AuthorBadgeProps {
-    author: Author;
+    author: DatabaseAuthor;
     showRole?: boolean;
     size?: "sm" | "md" | "lg";
 }

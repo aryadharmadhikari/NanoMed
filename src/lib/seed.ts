@@ -20,10 +20,7 @@ export async function seedDatabase() {
     .upsert(productCategories, { onConflict: 'name' })
     .select();
 
-  if (prodCatError) {
-    console.error('Error seeding product categories:', prodCatError);
-    return;
-  }
+  if (prodCatError) throw new Error(`Error seeding product categories: ${prodCatError.message}`);
 
   // 2. Seed Blog Categories
   console.log('Seeding Blog Categories...');
@@ -37,16 +34,13 @@ export async function seedDatabase() {
     .upsert(blogCategories, { onConflict: 'name' })
     .select();
 
-  if (blogCatError) {
-    console.error('Error seeding blog categories:', blogCatError);
-    return;
-  }
+  if (blogCatError) throw new Error(`Error seeding blog categories: ${blogCatError.message}`);
 
   // 3. Seed Authors
   console.log('Seeding Authors...');
   const uniqueAuthors = Array.from(new Map(blogs.map(b => [b.author.id, b.author])).values());
   const { error: authError } = await supabase.from('authors').upsert(uniqueAuthors);
-  if (authError) console.error('Error seeding authors:', authError);
+  if (authError) throw new Error(`Error seeding authors: ${authError.message}`);
 
   // 4. Seed Products
   console.log('Seeding Products...');
@@ -70,7 +64,7 @@ export async function seedDatabase() {
     .upsert(formattedProducts)
     .select();
 
-  if (prodError) console.error('Error seeding products:', prodError);
+  if (prodError) throw new Error(`Error seeding products: ${prodError.message}`);
 
   // 5. Seed Blogs
   console.log('Seeding Blogs...');
@@ -90,7 +84,7 @@ export async function seedDatabase() {
     };
   });
   const { error: blogError } = await supabase.from('blogs').upsert(formattedBlogs);
-  if (blogError) console.error('Error seeding blogs:', blogError);
+  if (blogError) throw new Error(`Error seeding blogs: ${blogError.message}`);
 
   // 6. Seed Reviews (Generic linkage to first matching product or random for demo)
   console.log('Seeding Reviews...');
@@ -108,7 +102,7 @@ export async function seedDatabase() {
     };
   });
   const { error: revError } = await supabase.from('reviews').upsert(formattedReviews);
-  if (revError) console.error('Error seeding reviews:', revError);
+  if (revError) throw new Error(`Error seeding reviews: ${revError.message}`);
 
   console.log('--- Seeding complete! ---');
 }
