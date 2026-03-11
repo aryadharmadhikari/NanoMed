@@ -1,7 +1,7 @@
 import { supabase } from './supabase';
-import { products } from '../data/products';
-import { blogs } from '../data/blogs';
-import { reviews } from '../data/reviews';
+import { products } from '../mockdata/products';
+import { blogs } from '../mockdata/blogs';
+import { reviews } from '../mockdata/reviews';
 
 const slugify = (text: string) => text.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
 
