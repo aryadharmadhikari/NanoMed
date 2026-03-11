@@ -4,6 +4,7 @@ import "./globals.css";
 import AnnouncementBar from "../components/AnnouncementBar";
 import WhatsAppFAB from "../components/WhatsAppFAB";
 import { League_Spartan, Manrope } from "next/font/google";
+import type { Metadata } from "next";
 
 const leagueSpartan = League_Spartan({
   subsets: ["latin"],
@@ -17,10 +18,10 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-import type { Metadata } from "next";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://nano-med.vercel.app');
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nanomed.in'), // Update with actual domain
+  metadataBase: new URL(siteUrl),
   title: {
     default: "NanoMed | Premium Medical Equipment for Home Care",
     template: "%s | NanoMed"
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NanoMed | Premium Medical Equipment",
     description: "Recovery deserves care, comfort, and confidence. Discover our range of elderly care products.",
-    url: 'https://nanomed.in',
+    url: siteUrl,
     siteName: 'NanoMed',
     locale: 'en_IN',
     type: 'website',
@@ -57,7 +58,6 @@ export default function RootLayout({
         <AnnouncementBar />
         <WhatsAppFAB />
         <Navbar />
-        {/* The "min-h-screen" ensures the footer stays at the bottom */}
         <div className="min-h-screen">
           {children}
         </div>
