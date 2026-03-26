@@ -22,25 +22,6 @@ export async function seedDatabase() {
 
   if (prodCatError) throw new Error(`Error seeding product categories: ${prodCatError.message}`);
 
-  // 2. Seed Blog Categories
-  console.log('Seeding Blog Categories...');
-  const blogCategoryNames = Array.from(new Set(blogs.map(b => b.category)));
-  const blogCategories = blogCategoryNames.map(name => ({
-    name,
-    slug: slugify(name)
-  }));
-  const { data: insertedBlogCats, error: blogCatError } = await supabase
-    .from('blog_categories')
-    .upsert(blogCategories, { onConflict: 'name' })
-    .select();
-
-  if (blogCatError) throw new Error(`Error seeding blog categories: ${blogCatError.message}`);
-
-  // 3. Seed Authors
-  console.log('Seeding Authors...');
-  const uniqueAuthors = Array.from(new Map(blogs.map(b => [b.author.id, b.author])).values());
-  const { error: authError } = await supabase.from('authors').upsert(uniqueAuthors);
-  if (authError) throw new Error(`Error seeding authors: ${authError.message}`);
 
   // 4. Seed Products
   console.log('Seeding Products...');
@@ -51,14 +32,14 @@ export async function seedDatabase() {
       price: p.price,
       mrp: p.mrp,
       category_id: category?.id,
-      image: p.image,
+      images: [p.image],
       description: p.description,
       features: p.features || [],
       specifications: p.specifications || {},
       ideal_for: p.idealFor || []
     };
   });
-  
+
   const { data: insertedProducts, error: prodError } = await supabase
     .from('products')
     .upsert(formattedProducts)
@@ -66,25 +47,6 @@ export async function seedDatabase() {
 
   if (prodError) throw new Error(`Error seeding products: ${prodError.message}`);
 
-  // 5. Seed Blogs
-  console.log('Seeding Blogs...');
-  const formattedBlogs = blogs.map(b => {
-    const category = insertedBlogCats?.find(c => c.name === b.category);
-    return {
-      slug: b.slug,
-      title: b.title,
-      excerpt: b.excerpt,
-      content: b.content,
-      date: new Date(b.date).toISOString().split('T')[0],
-      read_time: b.readTime,
-      image: b.image,
-      category_id: category?.id,
-      author_id: b.author.id,
-      is_featured: b.isFeatured || false
-    };
-  });
-  const { error: blogError } = await supabase.from('blogs').upsert(formattedBlogs);
-  if (blogError) throw new Error(`Error seeding blogs: ${blogError.message}`);
 
   // 6. Seed Reviews (Generic linkage to first matching product or random for demo)
   console.log('Seeding Reviews...');
@@ -106,3 +68,9 @@ export async function seedDatabase() {
 
   console.log('--- Seeding complete! ---');
 }
+
+// Automatically execute if run directly
+seedDatabase().then(() => process.exit(0)).catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
