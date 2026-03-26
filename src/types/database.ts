@@ -4,7 +4,7 @@ export interface DatabaseProduct {
     name: string;
     price: number;
     mrp: number;
-    image: string;
+    images: string[];
     description: string | null;
     features: string[];
     specifications: Record<string, string>;
