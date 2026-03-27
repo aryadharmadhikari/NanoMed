@@ -2,7 +2,7 @@ import { supabase } from "../../../lib/supabase";
 import { DatabaseProduct } from "../../../types/database";
 import ProductSpecs from "../../../components/ProductSpecs";
 import ProductCard from "../../../components/ProductCard";
-import Image from "next/image";
+import ProductGallery from "../../../components/ProductGallery";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -50,19 +50,14 @@ export default async function SingleProductPage({
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-                    {/* LEFT: Product Image & Gallery Concept */}
-                    <div className="space-y-6 sticky top-24">
-                        <div className="relative aspect-square w-full bg-gray-50 rounded-3xl overflow-hidden border border-gray-100 group">
-                            <Image
-                                src={product.image}
-                                alt={product.name}
-                                fill
-                                className="object-contain p-12 transition-transform duration-500 group-hover:scale-105"
-                            />
-                            <div className="absolute top-6 left-6 bg-white/90 backdrop-blur shadow-sm px-4 py-1 rounded-full text-xs font-bold text-brand-teal font-body">
-                                {product.product_categories?.name || "General"}
-                            </div>
-                        </div>
+                    {/* LEFT: Product Image & Gallery */}
+                    <div className="w-full">
+                        <ProductGallery 
+                            images={product.images || []} 
+                            fallbackImage={'/images/products/placeholder.jpg'}
+                            productName={product.name}
+                            categoryName={product.product_categories?.name || "General"}
+                        />
                     </div>
 
                     {/* RIGHT: Product Details */}

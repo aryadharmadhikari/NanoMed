@@ -54,11 +54,11 @@ export default async function AdminDashboardPage() {
                                 <tr key={product.id} className="hover:bg-gray-50/50 transition group">
                                     <td className="py-4 px-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 relative bg-gray-100 rounded-lg overflow-hidden border border-gray-200">
-                                                {product.image ? (
-                                                    <Image src={product.image} alt={product.name} fill className="object-cover" />
+                                            <div className="relative w-12 h-12 bg-gray-50 rounded-lg overflow-hidden border border-gray-200 shrink-0">
+                                                {product.images?.[0] ? (
+                                                    <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
                                                 ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-gray-400">🖼️</div>
+                                                    <div className="w-full h-full flex items-center justify-center text-xs text-brand-teal bg-teal-50 font-bold">Img</div>
                                                 )}
                                             </div>
                                             <div>

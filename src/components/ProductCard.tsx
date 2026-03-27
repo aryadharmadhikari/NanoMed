@@ -7,12 +7,12 @@ export default function ProductCard({ product }: { product: DatabaseProduct }) {
         <div className="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-100 hover:shadow-xl transition duration-300 flex flex-col h-full">
 
             {/* Product Image */}
-            <div className="relative h-64 w-full bg-gray-100">
+            <div className="relative aspect-square overflow-hidden bg-gray-50 border-b border-gray-100 group">
                 <Image
-                    src={product.image}
+                    src={product.images?.[0] || '/images/products/placeholder.jpg'}
                     alt={product.name}
                     fill
-                    className="object-cover"
+                    className="object-contain p-6 transition-transform duration-500 group-hover:scale-110"
                 />
             </div>
 
