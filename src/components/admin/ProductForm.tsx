@@ -17,7 +17,7 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
     const [price, setPrice] = useState(initialData?.price || 0);
     const [mrp, setMrp] = useState(initialData?.mrp || 0);
     const [description, setDescription] = useState(initialData?.description || "");
-    const [image, setImage] = useState(initialData?.image || "");
+    const [images, setImages] = useState<string[]>(initialData?.images || []);
     const [isUploading, setIsUploading] = useState(false);
 
     // Arrays and JSON
@@ -58,22 +58,48 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
     const removeSpec = (index: number) => setSpecs(specs.filter((_, i) => i !== index));
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
 
         setIsUploading(true);
         setError("");
 
-        const { url, error: uploadError } = await uploadImage(file);
+        const newUrls: string[] = [];
 
-        if (uploadError || !url) {
-            setError(uploadError || "Failed to upload image. Make sure the 'product-images' bucket is completely public.");
-            setIsUploading(false);
-            return;
+        for (const file of files) {
+            const { url, error: uploadError } = await uploadImage(file);
+
+            if (uploadError || !url) {
+                setError(`Failed to upload one or more images. Please fix your Supabase RLS policies.`);
+                // Continue trying to upload remaining files
+            } else {
+                newUrls.push(url);
+            }
         }
 
-        setImage(url);
+        // Safely append new images to the existing ones
+        if (newUrls.length > 0) {
+            setImages(prev => [...prev, ...newUrls]);
+        }
+
+        e.target.value = ''; // Reset input to allow re-uploading the same file if needed
         setIsUploading(false);
+    };
+
+    const removeImage = (indexToRemove: number) => {
+        setImages(images.filter((_, i) => i !== indexToRemove));
+    };
+
+    const moveImage = (index: number, direction: 'left' | 'right') => {
+        if (direction === 'left' && index === 0) return;
+        if (direction === 'right' && index === images.length - 1) return;
+
+        const newImages = [...images];
+        const swapIndex = direction === 'left' ? index - 1 : index + 1;
+        
+        // Swap
+        [newImages[index], newImages[swapIndex]] = [newImages[swapIndex], newImages[index]];
+        setImages(newImages);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -101,11 +127,11 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
                 price: Number(price),
                 mrp: Number(mrp),
                 description,
-                image,           // Temporary string input until we build the Uploader
+                images,          // Array of gallery images
                 features: cleanFeatures,
                 specifications: specificationsObj,
-                ideal_for: [],   // Simplification for now
-                category_id: null // Uncategorized for now
+                ideal_for: [],   
+                category_id: initialData?.category_id || null 
             };
 
             let result;
@@ -153,23 +179,66 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
                 </div>
 
                 <div className="col-span-full">
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Product Image</label>
-                    <div className="flex items-start gap-6">
-                        {image && (
-                            <div className="relative w-32 h-32 rounded-xl overflow-hidden border border-gray-200 shrink-0">
-                                <Image src={image} alt="Preview" fill className="object-cover" />
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Product Images (Gallery & Sequence)</label>
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+                        {images.length > 0 && (
+                            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 mb-6">
+                                {images.map((img, idx) => (
+                                    <div key={idx} className="relative aspect-square rounded-lg border border-gray-200 bg-white overflow-hidden group shadow-sm">
+                                        <Image src={img} alt={`Img ${idx}`} fill className="object-contain p-2" />
+                                        
+                                        {/* Status badges */}
+                                        {idx === 0 && (
+                                            <span className="absolute top-1 left-1 bg-brand-teal text-white text-[10px] font-bold px-2 py-0.5 rounded shadow z-10">Primary</span>
+                                        )}
+                                        
+                                        {/* Removing */}
+                                        <button 
+                                            type="button" 
+                                            onClick={() => removeImage(idx)}
+                                            className="absolute top-1 right-1 bg-red-500 text-white w-6 h-6 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow-md hover:bg-red-600 font-bold z-10"
+                                            title="Remove Image"
+                                        >
+                                            ×
+                                        </button>
+                                        
+                                        {/* Reordering Controls (Bottom) */}
+                                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-1 flex justify-between opacity-0 group-hover:opacity-100 transition duration-200 items-center z-10">
+                                            <button 
+                                                type="button" 
+                                                onClick={() => moveImage(idx, 'left')} 
+                                                disabled={idx === 0}
+                                                className="text-white hover:text-brand-teal disabled:opacity-30 disabled:hover:text-white p-1"
+                                                title="Move Left"
+                                            >
+                                                ◀
+                                            </button>
+                                            <span className="text-white text-xs font-mono font-bold">{idx + 1}</span>
+                                            <button 
+                                                type="button" 
+                                                onClick={() => moveImage(idx, 'right')} 
+                                                disabled={idx === images.length - 1}
+                                                className="text-white hover:text-brand-teal disabled:opacity-30 disabled:hover:text-white p-1"
+                                                title="Move Right"
+                                            >
+                                                ▶
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         )}
-                        <div className="flex-1">
+                        <div className="flex-1 max-w-md">
                             <input
                                 type="file"
                                 accept="image/*"
+                                multiple
                                 onChange={handleImageUpload}
                                 disabled={isUploading}
                                 className="block w-full text-sm text-gray-500 font-body file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-brand-teal hover:file:bg-teal-100 transition disabled:opacity-50"
                             />
-                            {isUploading && <p className="text-sm text-brand-teal mt-2 font-bold animate-pulse">Uploading image to Supabase...</p>}
-                            <p className="text-xs text-gray-400 mt-2 font-body">Uploading an image overrides the previous one.</p>
+                            {isUploading && <p className="text-sm text-brand-teal mt-2 font-bold animate-pulse">Uploading securely to Cloud Storage...</p>}
+                            <p className="text-xs text-gray-400 mt-2 font-body">Select multiple images at once. Drag controls are below each image to choose the exact display sequence.</p>
                         </div>
                     </div>
                 </div>
