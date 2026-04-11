@@ -28,7 +28,8 @@ export async function seedDatabase() {
   const formattedProducts = products.map(p => {
     const category = insertedProdCats?.find(c => c.name === p.category);
     return {
-      name: p.name,
+      name: p.name.split(' | ')[0].trim(),
+      subtitle: p.name.includes(' | ') ? p.name.split(' | ')[1].trim() : null,
       price: p.price,
       mrp: p.mrp,
       category_id: category?.id,

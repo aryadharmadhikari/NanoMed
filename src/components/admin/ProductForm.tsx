@@ -14,6 +14,7 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
 
     // Form State
     const [name, setName] = useState(initialData?.name || "");
+    const [subtitle, setSubtitle] = useState(initialData?.subtitle || "");
     const [price, setPrice] = useState(initialData?.price || 0);
     const [mrp, setMrp] = useState(initialData?.mrp || 0);
     const [description, setDescription] = useState(initialData?.description || "");
@@ -96,7 +97,7 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
 
         const newImages = [...images];
         const swapIndex = direction === 'left' ? index - 1 : index + 1;
-        
+
         // Swap
         [newImages[index], newImages[swapIndex]] = [newImages[swapIndex], newImages[index]];
         setImages(newImages);
@@ -124,14 +125,15 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
 
             const productData = {
                 name,
+                subtitle: subtitle.trim() || null,
                 price: Number(price),
                 mrp: Number(mrp),
                 description,
-                images,          // Array of gallery images
+                images,
                 features: cleanFeatures,
                 specifications: specificationsObj,
-                ideal_for: [],   
-                category_id: initialData?.category_id || null 
+                ideal_for: [],
+                category_id: initialData?.category_id || null
             };
 
             let result;
@@ -160,7 +162,12 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
                 {/* Basic Info */}
                 <div className="col-span-full">
                     <label className="block text-sm font-bold text-gray-700 mb-2">Product Name</label>
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-teal focus:ring-1 focus:ring-brand-teal outline-none" placeholder="E.g., Folding Walking Stick" />
+                    <input type="text" value={name} onChange={e => setName(e.target.value)} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-teal focus:ring-1 focus:ring-brand-teal outline-none" placeholder="E.g., Foldable Aluminium Walking Stick" />
+                </div>
+
+                <div className="col-span-full">
+                    <label className="block text-sm font-bold text-gray-700 mb-2">Subtitle <span className="font-normal text-gray-400">(short tagline shown below the name)</span></label>
+                    <input type="text" value={subtitle} onChange={e => setSubtitle(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-brand-teal focus:ring-1 focus:ring-brand-teal outline-none" placeholder="E.g., Lightweight Adjustable Cane for Men, Women & Seniors" />
                 </div>
 
                 <div>
@@ -186,27 +193,27 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
                                 {images.map((img, idx) => (
                                     <div key={idx} className="relative aspect-square rounded-lg border border-gray-200 bg-white overflow-hidden group shadow-sm">
                                         <Image src={img} alt={`Img ${idx}`} fill className="object-contain p-2" />
-                                        
+
                                         {/* Status badges */}
                                         {idx === 0 && (
                                             <span className="absolute top-1 left-1 bg-brand-teal text-white text-[10px] font-bold px-2 py-0.5 rounded shadow z-10">Primary</span>
                                         )}
-                                        
+
                                         {/* Removing */}
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             onClick={() => removeImage(idx)}
                                             className="absolute top-1 right-1 bg-red-500 text-white w-6 h-6 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow-md hover:bg-red-600 font-bold z-10"
                                             title="Remove Image"
                                         >
                                             ×
                                         </button>
-                                        
+
                                         {/* Reordering Controls (Bottom) */}
                                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-1 flex justify-between opacity-0 group-hover:opacity-100 transition duration-200 items-center z-10">
-                                            <button 
-                                                type="button" 
-                                                onClick={() => moveImage(idx, 'left')} 
+                                            <button
+                                                type="button"
+                                                onClick={() => moveImage(idx, 'left')}
                                                 disabled={idx === 0}
                                                 className="text-white hover:text-brand-teal disabled:opacity-30 disabled:hover:text-white p-1"
                                                 title="Move Left"
@@ -214,9 +221,9 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
                                                 ◀
                                             </button>
                                             <span className="text-white text-xs font-mono font-bold">{idx + 1}</span>
-                                            <button 
-                                                type="button" 
-                                                onClick={() => moveImage(idx, 'right')} 
+                                            <button
+                                                type="button"
+                                                onClick={() => moveImage(idx, 'right')}
                                                 disabled={idx === images.length - 1}
                                                 className="text-white hover:text-brand-teal disabled:opacity-30 disabled:hover:text-white p-1"
                                                 title="Move Right"

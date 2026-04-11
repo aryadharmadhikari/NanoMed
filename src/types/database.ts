@@ -2,6 +2,7 @@ export interface DatabaseProduct {
     id: string;
     category_id: string | null;
     name: string;
+    subtitle: string | null;
     price: number;
     mrp: number;
     images: string[];

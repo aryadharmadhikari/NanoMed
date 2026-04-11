@@ -21,9 +21,14 @@ export default function ProductCard({ product }: { product: DatabaseProduct }) {
                 <p className="text-sm text-brand-teal font-bold uppercase tracking-wide font-body">
                     {product.product_categories?.name || "General"}
                 </p>
-                <h3 className="text-xl font-heading font-bold text-gray-900 mt-2 line-clamp-2 min-h-[3.5rem]">
+                <h3 className="text-xl font-heading font-bold text-gray-900 mt-2 line-clamp-2">
                     {product.name}
                 </h3>
+                {product.subtitle && (
+                    <p className="text-sm text-gray-500 font-body mt-1 line-clamp-2 min-h-[2.5rem]">
+                        {product.subtitle}
+                    </p>
+                )}
                 <div className="flex flex-col items-start gap-1 mt-auto pt-4">
                     <div className="flex items-center gap-2">
                         <span className="text-xl font-bold text-brand-teal font-body">

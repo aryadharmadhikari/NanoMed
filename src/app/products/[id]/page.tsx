@@ -52,8 +52,8 @@ export default async function SingleProductPage({
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     {/* LEFT: Product Image & Gallery */}
                     <div className="w-full">
-                        <ProductGallery 
-                            images={product.images || []} 
+                        <ProductGallery
+                            images={product.images || []}
                             fallbackImage={'/images/products/placeholder.jpg'}
                             productName={product.name}
                             categoryName={product.product_categories?.name || "General"}
@@ -65,6 +65,12 @@ export default async function SingleProductPage({
                         <h1 className="text-3xl md:text-5xl font-heading font-extrabold text-gray-900 leading-tight">
                             {product.name}
                         </h1>
+
+                        {product.subtitle && (
+                            <p className="text-lg md:text-xl text-gray-500 font-body font-medium mt-3 leading-snug">
+                                {product.subtitle}
+                            </p>
+                        )}
 
                         <div className="flex items-end gap-3 mt-6">
                             <span className="text-4xl md:text-5xl font-body font-black text-brand-teal">
