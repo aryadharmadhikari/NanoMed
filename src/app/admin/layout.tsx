@@ -25,11 +25,11 @@ export default function AdminLayout({
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // The password variable is no longer in this file!
     // We send the user's input to the Secure Server Action
     const isValid = await verifyAdminPassword(password);
-    
+
     if (isValid) {
       sessionStorage.setItem("nanomed_admin_auth", "true");
       setIsAuthenticated(true);
@@ -91,17 +91,32 @@ export default function AdminLayout({
           <h1 className="text-2xl font-heading font-black text-brand-teal">NanoMed<span className="text-gray-800">Admin</span></h1>
         </div>
         <nav className="flex-1 py-6 px-4 space-y-2">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider px-4 mb-2">Products</p>
           <Link
             href="/admin"
             className={`flex items-center px-4 py-3 rounded-lg font-bold font-body transition ${pathname === '/admin' ? 'bg-brand-teal text-white' : 'text-gray-600 hover:bg-gray-50'}`}
           >
-            Products
+            All Products
           </Link>
           <Link
             href="/admin/products/new"
             className={`flex items-center px-4 py-3 rounded-lg font-bold font-body transition ${pathname === '/admin/products/new' ? 'bg-brand-teal text-white' : 'text-gray-600 hover:bg-gray-50'}`}
           >
             Add Product
+          </Link>
+
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider px-4 mt-6 mb-2">Blog</p>
+          <Link
+            href="/admin/blog"
+            className={`flex items-center px-4 py-3 rounded-lg font-bold font-body transition ${pathname === '/admin/blog' ? 'bg-brand-teal text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+          >
+            All Posts
+          </Link>
+          <Link
+            href="/admin/blog/new"
+            className={`flex items-center px-4 py-3 rounded-lg font-bold font-body transition ${pathname === '/admin/blog/new' ? 'bg-brand-teal text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+          >
+            New Post
           </Link>
         </nav>
         <div className="p-4 border-t border-gray-100">
