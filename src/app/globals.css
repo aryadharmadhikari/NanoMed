@@ -54,3 +54,19 @@ h6 {
 .prose ul {
   @apply list-disc pl-6 mb-4 space-y-2;
 }
+
+.prose ol {
+  @apply list-decimal pl-6 mb-4 space-y-2;
+}
+
+.prose li {
+  @apply text-gray-700;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-brand-teal pl-4 italic text-gray-500 my-4;
+}
+
+.prose blockquote p {
+  @apply mb-0;
+}
