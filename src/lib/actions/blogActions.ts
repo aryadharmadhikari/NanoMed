@@ -94,9 +94,10 @@ export async function createBlogCategory(name: string) {
 }
 
 export async function createAuthor(name: string) {
+    const id = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     const { data, error } = await supabase
         .from('authors')
-        .insert([{ name, role: 'Author', bio: null, avatar: null }])
+        .insert([{ id, name, role: 'Author', bio: null, avatar: '' }])
         .select()
         .single();
     if (error) return { error: error.message, data: null };

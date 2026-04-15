@@ -32,17 +32,19 @@ function SearchableCombobox({ options: initOptions, value, onChange, onCreateNew
     onCreateNew: (name: string) => Promise<{ id: string; name: string } | null>;
     placeholder: string;
 }) {
-    const [options, setOptions] = useState(initOptions);
+    // Keep server-fetched and locally created items separate so a parent
+    // re-render (triggered by onChange) never wipes a just-created item.
+    const [localCreated, setLocalCreated] = useState<{ id: string; name: string }[]>([]);
     const [search, setSearch] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const [createError, setCreateError] = useState('');
     const ref = useRef<HTMLDivElement>(null);
 
+    const options = [...initOptions, ...localCreated];
     const selected = options.find(o => o.id === value);
     const filtered = options.filter(o => o.name.toLowerCase().includes(search.toLowerCase()));
     const hasExact = options.some(o => o.name.toLowerCase() === search.toLowerCase());
-
-    useEffect(() => { setOptions(initOptions); }, [initOptions]);
 
     useEffect(() => {
         const handler = (e: MouseEvent) => {
@@ -62,12 +64,16 @@ function SearchableCombobox({ options: initOptions, value, onChange, onCreateNew
     const handleCreate = async () => {
         if (!search.trim()) return;
         setIsCreating(true);
+        setCreateError('');
         const created = await onCreateNew(search.trim());
         if (created) {
-            setOptions(prev => [...prev, created]);
+            setLocalCreated(prev => [...prev, created]); // survives parent re-render
             onChange(created.id, created.name);
+            setIsOpen(false); setSearch('');
+        } else {
+            setCreateError(`Failed to create "${search}". Check Supabase permissions.`);
         }
-        setIsCreating(false); setIsOpen(false); setSearch('');
+        setIsCreating(false);
     };
 
     return (
@@ -83,6 +89,7 @@ function SearchableCombobox({ options: initOptions, value, onChange, onCreateNew
                 />
                 <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs">▾</span>
             </div>
+            {createError && <p className="text-xs text-red-500 mt-1 font-bold">{createError}</p>}
             {isOpen && (
                 <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-52 overflow-y-auto">
                     {filtered.length === 0 && !search && (
@@ -105,6 +112,7 @@ function SearchableCombobox({ options: initOptions, value, onChange, onCreateNew
         </div>
     );
 }
+
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function BlogWriter({ initialData, categories, authors }: BlogWriterProps) {
