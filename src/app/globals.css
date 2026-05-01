@@ -70,3 +70,23 @@ h6 {
 .prose blockquote p {
   @apply mb-0;
 }
+
+/* 3. Product Gallery Animations */
+@keyframes galleryBgPulse {
+  0%, 100% { background-color: #e2dfdc; }
+  50%       { background-color: #ede9e6; }
+}
+
+@keyframes galleryImageFade {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.gallery-bg {
+  background-color: #e2dfdc;
+  animation: galleryBgPulse 4s ease-in-out infinite;
+}
+
+.gallery-image-fade {
+  animation: galleryImageFade 0.25s ease-out;
+}
