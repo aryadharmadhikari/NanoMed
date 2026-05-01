@@ -5,6 +5,7 @@ import ProductCard from "../../../components/ProductCard";
 import ProductGallery from "../../../components/ProductGallery";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft } from "../../../components/icons";
 
 export default async function SingleProductPage({
     params
@@ -45,8 +46,13 @@ export default async function SingleProductPage({
     return (
         <main className="min-h-screen bg-white">
             <div className="max-w-7xl mx-auto px-6 py-12">
-                <Link href="/products" className="text-gray-500 hover:text-brand-teal transition flex items-center gap-2 mb-12 font-medium font-body">
-                    ← Back to Medical Catalog
+                <Link href="/products" className="inline-flex items-center gap-3 mb-12 group w-fit">
+                    <span className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-50 group-hover:bg-brand-teal transition-colors duration-200 shadow-sm">
+                        <ArrowLeft className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors duration-200" />
+                    </span>
+                    <span className="text-gray-500 group-hover:text-brand-teal font-semibold font-body transition-colors duration-200 text-sm">
+                        Back to Medical Catalog
+                    </span>
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
 import { DatabaseBlog } from "../../../types/database";
+import { ArrowLeft } from "../../../components/icons";
 
 export default async function SingleBlogPost({
     params
@@ -31,7 +32,7 @@ export default async function SingleBlogPost({
             {/* Header / Hero */}
             <header className="pt-20 pb-16 px-6 max-w-4xl mx-auto text-center">
                 <div className="inline-flex items-center gap-2 text-sm font-body font-bold text-brand-teal mb-6 bg-brand-teal/10 px-3 py-1 rounded-full uppercase tracking-wider">
-                    <span>{blog.blog_categories?.name || "Article"}</span>
+                    <span>{blog.blog_categories?.name || "Blog"}</span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl/tight font-heading font-extrabold text-gray-900 mb-8">
@@ -95,9 +96,14 @@ export default async function SingleBlogPost({
                     </div>
                 )}
 
-                <div className="text-center mt-12">
-                    <Link href="/blog" className="text-brand-teal font-bold hover:underline font-body">
-                        ← Back to all articles
+                <div className="flex justify-center mt-12">
+                    <Link href="/blog" className="inline-flex items-center gap-3 group w-fit">
+                        <span className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-50 group-hover:bg-brand-teal transition-colors duration-200 shadow-sm">
+                            <ArrowLeft className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors duration-200" />
+                        </span>
+                        <span className="text-gray-500 group-hover:text-brand-teal font-semibold font-body transition-colors duration-200 text-sm">
+                            Back to all blogs
+                        </span>
                     </Link>
                 </div>
             </article>
