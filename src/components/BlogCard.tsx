@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { DatabaseBlog } from "../types/database";
+import { ArrowRight } from "./icons";
 
 export default function BlogCard({ blog }: { blog: DatabaseBlog }) {
     return (
@@ -44,8 +45,8 @@ export default function BlogCard({ blog }: { blog: DatabaseBlog }) {
                             )}
                             <span className="text-xs font-bold font-body text-gray-700">{blog.authors?.name}</span>
                         </div>
-                        <span className="text-brand-teal text-sm font-bold font-body group-hover/card:translate-x-1 transition-transform">
-                            Read →
+                        <span className="inline-flex items-center gap-2 bg-brand-teal text-white text-xs font-bold font-body px-4 py-2 rounded-full shadow-sm group-hover/card:bg-teal-700 group-hover/card:shadow-md transition-all duration-300">
+                            Read Blog
                         </span>
                     </div>
                 </div>

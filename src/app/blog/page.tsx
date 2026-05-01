@@ -16,7 +16,7 @@ export default async function BlogListingPage({
     const { data: categoriesData } = await supabase
         .from('blog_categories')
         .select('*');
-    
+
     const categories = [{ name: 'All', slug: 'all' }, ...(categoriesData || [])];
 
     // 2. Build Query for Blogs
@@ -96,7 +96,7 @@ export default async function BlogListingPage({
                                     href={`/blog/${featuredBlog.slug}`}
                                     className="inline-block bg-white text-brand-teal px-8 py-3 rounded-full font-bold hover:bg-teal-50 transition font-body"
                                 >
-                                    Read Article
+                                    Read Blog
                                 </Link>
                             </div>
 
@@ -117,7 +117,7 @@ export default async function BlogListingPage({
             <section className="max-w-7xl mx-auto px-6 pb-24 border-t border-gray-100 pt-12 md:pt-16 md:mt-12">
                 <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
                     <h2 className="text-2xl font-heading font-bold text-gray-900">
-                        {currentCategorySlug === 'all' ? 'Latest Articles' : `${categories.find(c => c.slug === currentCategorySlug)?.name} Articles`}
+                        {currentCategorySlug === 'all' ? 'Latest Blogs' : `${categories.find(c => c.slug === currentCategorySlug)?.name} Blogs`}
                     </h2>
 
                     {/* Categories */}
@@ -146,15 +146,15 @@ export default async function BlogListingPage({
                 ) : (
                     <div className="text-center py-20 bg-gray-50 rounded-3xl border border-gray-100">
                         <div className="text-4xl mb-4">🔍</div>
-                        <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">No articles found</h3>
+                        <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">No blogs found</h3>
                         <p className="text-gray-500 font-body">
-                            We couldn't find any articles in this category. Try selecting another.
+                            We couldn't find any blogs in this category. Try selecting another.
                         </p>
                         <Link
                             href="/blog"
                             className="inline-block mt-6 text-brand-teal font-bold hover:underline font-body"
                         >
-                            View all articles
+                            View all blogs
                         </Link>
                     </div>
                 )}
