@@ -12,7 +12,7 @@ export default async function Home() {
     .from('products')
     .select('*, product_categories(name)')
     .limit(4);
-  
+
   // 2. Fetch Featured Selection (3 items)
   const { data: featuredData } = await supabase
     .from('products')
@@ -74,23 +74,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 3. Featured Selection (Highlighting Quality) */}
-      <section className="bg-blue-50/50 py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Featured Innovation</h2>
-            <p className="text-gray-500 mt-2">Premium mobility solutions from NANOMED.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Social Proof (Trust & Recovery) */}
+      {/* 3. Social Proof (Trust & Recovery) */}
       <section className="bg-gray-900 py-24 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -123,7 +107,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 5. Blog Space (Education & Authority) */}
+      {/* 4. Blog Space (Education & Authority) */}
       <section className="bg-blue-50/50 py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
