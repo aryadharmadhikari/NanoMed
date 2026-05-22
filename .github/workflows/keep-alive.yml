@@ -2,21 +2,25 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    - cron: '0 0 * * 1,4' # Every Monday and Thursday at midnight UTC
+    - cron: '0 0 */2 * *' # Every 2 days at midnight UTC (redundancy against GitHub scheduling delays)
   workflow_dispatch: # Also allows manual trigger from GitHub UI
+
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase Database
+      - name: Install PostgreSQL client
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Ping Supabase via direct DB connection
+        env:
+          DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/products?select=id&limit=1")
-          echo "HTTP Status: $response"
-          if [ "$response" != "200" ]; then
-            echo "Ping failed with status $response"
+          echo "Connecting to Supabase database directly..."
+          result=$(psql "$DATABASE_URL" -c "SELECT 'alive' AS status;" --tuples-only --no-align)
+          echo "Query result: $result"
+          if [ "$result" != "alive" ]; then
+            echo "Unexpected result from database: $result"
             exit 1
           fi
-          echo "Ping successful! Supabase is alive."
+          echo "✅ Direct DB ping successful — Supabase is alive."
