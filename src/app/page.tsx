@@ -26,11 +26,11 @@ export default async function Home() {
     .order('date', { ascending: false })
     .limit(3);
 
-  // 4. Fetch Home Reviews (3 reviews)
+  // 4. Fetch Home Reviews (up to 8 for a rich marquee strip)
   const { data: homeReviewsData } = await supabase
     .from('reviews')
     .select('*')
-    .limit(3);
+    .limit(8);
 
   const bestsellingProducts = (bestsellingData || []) as DatabaseProduct[];
   const featuredProducts = (featuredData || []) as DatabaseProduct[];
@@ -75,8 +75,9 @@ export default async function Home() {
       </section>
 
       {/* 3. Social Proof (Trust & Recovery) */}
-      <section className="bg-gray-900 py-24 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+      <section className="bg-gray-900 py-24 overflow-hidden">
+        {/* Heading — constrained */}
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
               Voices of Trust
@@ -85,13 +86,24 @@ export default async function Home() {
               See how families across Maharashtra are reclaiming independence with NanoMed.
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {homeReviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
+        {/* Marquee strip — full-width, no padding */}
+        {homeReviews.length > 0 && (
+          <div className="overflow-hidden">
+            <div className="flex gap-10 animate-marquee w-max">
+              {/* Duplicated once for seamless infinite loop */}
+              {[...homeReviews, ...homeReviews].map((review, i) => (
+                <div key={i} className="w-[340px] flex-none">
+                  <ReviewCard review={review} />
+                </div>
+              ))}
+            </div>
           </div>
+        )}
 
+        {/* Footer — constrained */}
+        <div className="max-w-7xl mx-auto px-6">
           <div className="mt-16 text-center">
             <div className="inline-flex items-center gap-2 text-gray-400">
               <div className="flex -space-x-2">
