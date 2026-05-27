@@ -3,6 +3,7 @@ import { DatabaseProduct } from "../../../types/database";
 import ProductSpecs from "../../../components/ProductSpecs";
 import ProductCard from "../../../components/ProductCard";
 import ProductGallery from "../../../components/ProductGallery";
+import AddToCartButton from "../../../components/AddToCartButton";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "../../../components/icons";
@@ -117,6 +118,23 @@ export default async function SingleProductPage({
 
                         {/* CTA Section */}
                         <div className="mt-12 space-y-4">
+                            {/* Add to Cart / Buy Now */}
+                            <AddToCartButton
+                                id={product.id}
+                                name={product.name}
+                                price={product.price}
+                                mrp={product.mrp ?? null}
+                                image={product.images?.[0] || '/images/products/placeholder.jpg'}
+                            />
+
+                            {/* Divider */}
+                            <div className="flex items-center gap-3 my-2">
+                                <div className="flex-1 h-px bg-gray-100" />
+                                <span className="text-xs text-gray-400 font-body">or</span>
+                                <div className="flex-1 h-px bg-gray-100" />
+                            </div>
+
+                            {/* WhatsApp Consult */}
                             <a
                                 href={whatsappUrl}
                                 target="_blank"
