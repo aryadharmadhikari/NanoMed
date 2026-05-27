@@ -4,11 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useCart } from "../context/CartContext";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const router = useRouter();
+    const { itemCount } = useCart();
 
     const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && searchQuery.trim()) {
@@ -63,7 +65,20 @@ export default function Navbar() {
                         </div>
                     </div>
 
-                    {/* 3. Mobile Hamburger Button (Hidden on Desktop) */}
+                    {/* Cart icon — mobile (always visible next to hamburger) */}
+                    <Link href="/cart" className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" strokeLinecap="round" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16 10a4 4 0 01-8 0" />
+                        </svg>
+                        {itemCount > 0 && (
+                            <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-teal text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                {itemCount > 9 ? '9+' : itemCount}
+                            </span>
+                        )}
+                    </Link>
+                    {/* Hamburger */}
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
