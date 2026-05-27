@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import "./globals.css";
 import AnnouncementBar from "../components/AnnouncementBar";
 import ConditionalWhatsAppFAB from "../components/ConditionalWhatsAppFAB";
+import { CartProvider } from "../context/CartContext";
 import { League_Spartan, Manrope } from "next/font/google";
 import type { Metadata } from "next";
 
@@ -55,13 +56,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${leagueSpartan.variable} ${manrope.variable}`}>
       <body className="font-body antialiased text-gray-900">
-        <AnnouncementBar />
-        <ConditionalWhatsAppFAB />
-        <Navbar />
-        <div className="min-h-screen">
-          {children}
-        </div>
-        <Footer />
+        <CartProvider>
+          <AnnouncementBar />
+          <ConditionalWhatsAppFAB />
+          <Navbar />
+          <div className="min-h-screen">
+            {children}
+          </div>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
