@@ -6,6 +6,9 @@ import { supabase } from "../lib/supabase";
 import { DatabaseProduct, DatabaseBlog, DatabaseReview } from "../types/database";
 import Link from "next/link";
 
+// Force server-side rendering on every request to prevent fetching of stale data from the last build.
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   // 1. Fetch Bestselling Products (Top 4)
   const { data: bestsellingData } = await supabase
