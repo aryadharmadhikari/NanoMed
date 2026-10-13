@@ -24,7 +24,7 @@ export default async function AdminDashboardPage() {
                 <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 font-body">
                     Error loading products: {error}
                     <br />
-                    <span className="text-sm">Make sure you have seeded your Supabase Database.</span>
+                    <span className="text-sm">Make sure you have seeded your Firebase Firestore Database.</span>
                 </div>
             ) : products?.length === 0 ? (
                 <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center shadow-sm">

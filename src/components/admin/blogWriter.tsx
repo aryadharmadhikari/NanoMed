@@ -71,7 +71,7 @@ function SearchableCombobox({ options: initOptions, value, onChange, onCreateNew
             onChange(created.id, created.name);
             setIsOpen(false); setSearch('');
         } else {
-            setCreateError(`Failed to create "${search}". Check Supabase permissions.`);
+            setCreateError(`Failed to create "${search}". Check Firebase Firestore permissions.`);
         }
         setIsCreating(false);
     };

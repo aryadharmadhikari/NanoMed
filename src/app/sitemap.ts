@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
-import { supabase } from '../lib/supabase';
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://nano-med.vercel.app');
@@ -18,29 +19,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 1.0,
     }));
 
-    // 2. Dynamic Product Routes from Supabase
-    const { data: products } = await supabase
-        .from('products')
-        .select('id, updated_at');
-    
-    const productRoutes = (products || []).map((product) => ({
-        url: `${baseUrl}/products/${product.id}`,
-        lastModified: new Date(product.updated_at),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }));
+    // 2. Dynamic Product Routes from Firestore
+    let productRoutes: MetadataRoute.Sitemap = [];
+    try {
+        const prodSnap = await getDocs(collection(db, 'products'));
+        productRoutes = prodSnap.docs.map((doc) => {
+            const data = doc.data();
+            return {
+                url: `${baseUrl}/products/${doc.id}`,
+                lastModified: data.updated_at ? new Date(data.updated_at) : new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.8,
+            };
+        });
+    } catch (e) {
+        console.error("Error fetching products for sitemap:", e);
+    }
 
-    // 3. Dynamic Blog Routes from Supabase
-    const { data: blogs } = await supabase
-        .from('blogs')
-        .select('slug, date');
-
-    const blogRoutes = (blogs || []).map((blog) => ({
-        url: `${baseUrl}/blog/${blog.slug}`,
-        lastModified: new Date(blog.date),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
-    }));
+    // 3. Dynamic Blog Routes from Firestore
+    let blogRoutes: MetadataRoute.Sitemap = [];
+    try {
+        const blogSnap = await getDocs(collection(db, 'blogs'));
+        blogRoutes = blogSnap.docs
+            .filter((doc) => doc.data().slug)
+            .map((doc) => {
+                const data = doc.data();
+                return {
+                    url: `${baseUrl}/blog/${data.slug}`,
+                    lastModified: data.date ? new Date(data.date) : new Date(),
+                    changeFrequency: 'monthly' as const,
+                    priority: 0.7,
+                };
+            });
+    } catch (e) {
+        console.error("Error fetching blogs for sitemap:", e);
+    }
 
     return [...staticRoutes, ...productRoutes, ...blogRoutes];
 }

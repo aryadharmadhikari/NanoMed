@@ -1,4 +1,5 @@
-import { supabase } from "../../../lib/supabase";
+import { db } from "../../../lib/firebase";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { DatabaseProduct } from "../../../types/database";
 import ProductSpecs from "../../../components/ProductSpecs";
 import ProductCard from "../../../components/ProductCard";
@@ -15,29 +16,33 @@ export default async function SingleProductPage({
 }) {
     const { id } = await params;
 
-    // 1. Fetch main product with category info
-    const { data: productData, error } = await supabase
-        .from('products')
-        .select('*, product_categories(name)')
-        .eq('id', id)
-        .single();
-
-    if (error || !productData) {
+    // 1. Fetch main product
+    let product: DatabaseProduct | null = null;
+    try {
+        const docRef = doc(db, "products", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            product = { id: docSnap.id, ...docSnap.data() } as DatabaseProduct;
+        }
+    } catch (error) {
         console.error("Error fetching product:", error);
+    }
+
+    if (!product) {
         notFound();
     }
 
-    const product = productData as DatabaseProduct;
-
     // 2. Fetch Related Products: Same category_id, excluding current product
-    const { data: relatedData } = await supabase
-        .from('products')
-        .select('*, product_categories(name)')
-        .eq('category_id', product.category_id)
-        .neq('id', product.id)
-        .limit(4);
-
-    const relatedProducts = (relatedData || []) as DatabaseProduct[];
+    let relatedProducts: DatabaseProduct[] = [];
+    try {
+        const productsSnap = await getDocs(collection(db, "products"));
+        relatedProducts = productsSnap.docs
+            .map(d => ({ id: d.id, ...d.data() } as DatabaseProduct))
+            .filter(p => p.id !== product!.id && (product!.category_id ? p.category_id === product!.category_id : true))
+            .slice(0, 4);
+    } catch (err) {
+        console.error("Error fetching related products:", err);
+    }
 
     // Setup WhatsApp details
     const whatsappNumber = "917738281416";

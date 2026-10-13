@@ -20,11 +20,11 @@ This project uses a modern, enterprise-grade stack optimized for performance and
 
 | Component | Technology | Role & Justification |
 | :--- | :--- | :--- |
-| **Frontend Engine** | **Next.js 14 (App Router)** | Server-Side Rendering (SSR) & ISR for maximum SEO and speed. |
+| **Frontend Engine** | **Next.js (App Router)** | Server-Side Rendering (SSR) & ISR for maximum SEO and speed. |
 | **Styling** | **Tailwind CSS** | Rapid UI development with a mobile-first approach. |
-| **Database** | **Supabase (PostgreSQL)** | Relational data integrity with real-time capabilities. |
-| **Authentication** | **Supabase Auth** | Secure user management (OTP/Social Login). |
-| **Payments** | **Razorpay** | (Phase 2) Seamless Indian payment gateway integration. |
+| **Database** | **Firebase (Cloud Firestore)** | NoSQL document database, zero downtime/inactivity pause, generous free tier. |
+| **Storage** | **Firebase Storage** | Fast and secure cloud image asset hosting. |
+| **Payments** | **WhatsApp Direct / (Phase 2 Razorpay)** | Frictionless order placement with zero transaction fees. |
 | **Deployment** | **Vercel** | Edge network deployment for instant global access. |
 
 ---
@@ -35,18 +35,18 @@ The project is executed in two strategic phases to prioritize lead generation be
 
 ### ✅ Phase 1: The "Digital Catalog" (Current Sprint)
 *Focus: Lead Generation & Brand Authority*
-- [ ] **Next.js Setup:** Hero Section & Navigation Bar.
-- [ ] **Product Catalog:** Dynamic product listing pages using ISR.
-- [ ] **Product Details:** Dedicated SEO-optimized pages for each SKU.
-- [ ] **Enquiry System:** "Chat on WhatsApp" integration for direct leads.
-- [ ] **Search & Filter:** Instant search functionality for products.
+- [x] **Next.js Setup:** Hero Section & Navigation Bar.
+- [x] **Product Catalog:** Dynamic product listing pages using ISR.
+- [x] **Product Details:** Dedicated SEO-optimized pages for each SKU.
+- [x] **Enquiry System:** "Chat on WhatsApp" integration for direct leads.
+- [x] **Search & Filter:** Instant search functionality for products.
+- [x] **Backend & Database:** Firebase Cloud Firestore & Storage integration.
 
 ### 🔜 Phase 2: The "E-commerce Upgrade" (Future)
 *Focus: Direct Sales & Transactions*
-- [ ] **User Identity:** Supabase Auth integration (Login/Sign Up).
-- [ ] **Cart Logic:** State management for shopping cart functionality.
-- [ ] **Checkout:** Razorpay Payment Gateway integration.
-- [ ] **Order Management:** Database schema for Orders & Admin Dashboard.
+- [ ] **User Identity:** Authentication integration (Login/Sign Up).
+- [ ] **Checkout:** Razorpay Payment Gateway integration (branch `feat/razorpay-payments` ready).
+- [ ] **Order Management:** Relational database schema for Orders & Invoicing.
 
 ---
 

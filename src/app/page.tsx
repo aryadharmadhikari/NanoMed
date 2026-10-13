@@ -2,7 +2,8 @@ import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
 import BlogCard from "../components/BlogCard";
 import ReviewCard from "../components/ReviewCard";
-import { supabase } from "../lib/supabase";
+import { db } from "../lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import { DatabaseProduct, DatabaseBlog, DatabaseReview } from "../types/database";
 import Link from "next/link";
 
@@ -10,35 +11,38 @@ import Link from "next/link";
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  // 1. Fetch Bestselling Products (Top 4)
-  const { data: bestsellingData } = await supabase
-    .from('products')
-    .select('*, product_categories(name)')
-    .limit(4);
+  let bestsellingProducts: DatabaseProduct[] = [];
+  let featuredProducts: DatabaseProduct[] = [];
+  let latestBlogs: DatabaseBlog[] = [];
+  let homeReviews: DatabaseReview[] = [];
 
-  // 2. Fetch Featured Selection (3 items)
-  const { data: featuredData } = await supabase
-    .from('products')
-    .select('*, product_categories(name)')
-    .range(4, 6); // Just get the next 3 for variety
+  try {
+    // 1. Fetch Products
+    const productsSnap = await getDocs(collection(db, "products"));
+    const allProducts = productsSnap.docs.map(d => ({ id: d.id, ...d.data() })) as DatabaseProduct[];
+    bestsellingProducts = allProducts.slice(0, 4);
+    featuredProducts = allProducts.slice(4, 7);
+  } catch (err) {
+    console.error("Error fetching products on Home:", err);
+  }
 
-  // 3. Fetch Latest Blogs (3 articles)
-  const { data: latestBlogsData } = await supabase
-    .from('blogs')
-    .select('*, blog_categories(name), authors(*)')
-    .order('date', { ascending: false })
-    .limit(3);
+  try {
+    // 2. Fetch Latest Blogs
+    const blogsSnap = await getDocs(collection(db, "blogs"));
+    const allBlogs = blogsSnap.docs.map(d => ({ id: d.id, ...d.data() })) as DatabaseBlog[];
+    allBlogs.sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime());
+    latestBlogs = allBlogs.slice(0, 3);
+  } catch (err) {
+    console.error("Error fetching blogs on Home:", err);
+  }
 
-  // 4. Fetch Home Reviews (up to 8 for a rich marquee strip)
-  const { data: homeReviewsData } = await supabase
-    .from('reviews')
-    .select('*')
-    .limit(8);
-
-  const bestsellingProducts = (bestsellingData || []) as DatabaseProduct[];
-  const featuredProducts = (featuredData || []) as DatabaseProduct[];
-  const latestBlogs = (latestBlogsData || []) as DatabaseBlog[];
-  const homeReviews = (homeReviewsData || []) as DatabaseReview[];
+  try {
+    // 3. Fetch Home Reviews
+    const reviewsSnap = await getDocs(collection(db, "reviews"));
+    homeReviews = reviewsSnap.docs.slice(0, 8).map(d => ({ id: d.id, ...d.data() })) as DatabaseReview[];
+  } catch (err) {
+    console.error("Error fetching reviews on Home:", err);
+  }
 
   return (
     <main className="min-h-screen bg-white">

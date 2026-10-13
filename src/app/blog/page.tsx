@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { supabase } from "../../lib/supabase";
+import { db } from "../../lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import { DatabaseBlog, DatabaseCategory } from "../../types/database";
 import BlogCard from "../../components/BlogCard";
 
@@ -13,28 +14,32 @@ export default async function BlogListingPage({
     const currentCategorySlug = category || 'all';
 
     // 1. Fetch Categories
-    const { data: categoriesData } = await supabase
-        .from('blog_categories')
-        .select('*');
-
-    const categories = [{ name: 'All', slug: 'all' }, ...(categoriesData || [])];
-
-    // 2. Build Query for Blogs
-    let query = supabase
-        .from('blogs')
-        .select('*, blog_categories(name, slug), authors(*)')
-        .order('date', { ascending: false });
-
-    if (currentCategorySlug !== 'all') {
-        // Find category id by slug
-        const cat = categories.find(c => c.slug === currentCategorySlug);
-        if (cat && 'id' in cat) {
-            query = query.eq('category_id', cat.id);
-        }
+    let categoriesData: DatabaseCategory[] = [];
+    try {
+        const catSnap = await getDocs(collection(db, "blog_categories"));
+        categoriesData = catSnap.docs.map(d => ({ id: d.id, ...d.data() } as DatabaseCategory));
+    } catch (err) {
+        console.error("Error fetching blog categories:", err);
     }
 
-    const { data: blogsData } = await query;
-    const blogs = (blogsData || []) as DatabaseBlog[];
+    const categories = [{ name: 'All', slug: 'all' }, ...categoriesData];
+
+    // 2. Fetch Blogs
+    let blogs: DatabaseBlog[] = [];
+    try {
+        const blogsSnap = await getDocs(collection(db, "blogs"));
+        blogs = blogsSnap.docs.map(d => ({ id: d.id, ...d.data() } as DatabaseBlog));
+        blogs.sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime());
+
+        if (currentCategorySlug !== 'all') {
+            const cat = categoriesData.find(c => c.slug === currentCategorySlug);
+            if (cat) {
+                blogs = blogs.filter(b => b.category_id === cat.id);
+            }
+        }
+    } catch (err) {
+        console.error("Error fetching blogs:", err);
+    }
 
     // 3. Featured Logic (Only for 'All' view)
     const featuredBlog = blogs.find(b => b.is_featured) || blogs[0];

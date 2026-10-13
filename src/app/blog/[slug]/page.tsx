@@ -2,7 +2,8 @@ import AuthorBadge from "../../../components/AuthorBadge";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { supabase } from "../../../lib/supabase";
+import { db } from "../../../lib/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { DatabaseBlog } from "../../../types/database";
 import { ArrowLeft } from "../../../components/icons";
 
@@ -13,19 +14,21 @@ export default async function SingleBlogPost({
 }) {
     const { slug } = await params;
 
-    // Fetch blog by slug with category and author
-    const { data: blogData, error } = await supabase
-        .from('blogs')
-        .select('*, blog_categories(name), authors(*)')
-        .eq('slug', slug)
-        .single();
-
-    if (error || !blogData) {
-        console.error("Error fetching blog post:", error);
-        notFound();
+    let blog: DatabaseBlog | null = null;
+    try {
+        const q = query(collection(db, "blogs"), where("slug", "==", slug));
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+            const blogDoc = snapshot.docs[0];
+            blog = { id: blogDoc.id, ...blogDoc.data() } as DatabaseBlog;
+        }
+    } catch (err) {
+        console.error("Error fetching blog post:", err);
     }
 
-    const blog = blogData as DatabaseBlog;
+    if (!blog) {
+        notFound();
+    }
 
     return (
         <main className="min-h-screen bg-white pb-24">

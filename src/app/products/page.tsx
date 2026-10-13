@@ -1,7 +1,8 @@
 "use client"
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useRef, Suspense } from "react";
-import { supabase } from "../../lib/supabase";
+import { db } from "../../lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import { DatabaseProduct } from "../../types/database";
 import ProductCard from "../../components/ProductCard";
 
@@ -57,10 +58,8 @@ function ProductList() {
         async function fetchProducts() {
             setLoading(true);
             try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*, product_categories(name)');
-                if (error) throw error;
+                const snapshot = await getDocs(collection(db, "products"));
+                const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                 setProducts(data as any);
             } catch (err: any) {
                 console.error("Error fetching products:", err);
