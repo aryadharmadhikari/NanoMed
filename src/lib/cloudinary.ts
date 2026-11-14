@@ -1,11 +1,13 @@
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true,
-});
+function configureCloudinary() {
+    cloudinary.config({
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+        secure: true,
+    });
+}
 
 export function isCloudinaryConfigured(): boolean {
     return Boolean(
@@ -21,9 +23,12 @@ export async function uploadToCloudinary(
 ): Promise<{ url: string; public_id: string }> {
     if (!isCloudinaryConfigured()) {
         throw new Error(
-            "Cloudinary credentials (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET) are missing."
+            "Cloudinary credentials (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET) are missing or server needs a restart."
         );
     }
+
+    // Ensure config is fresh with current process.env
+    configureCloudinary();
 
     return new Promise((resolve, reject) => {
         const uploadStream = cloudinary.uploader.upload_stream(
@@ -45,4 +50,3 @@ export async function uploadToCloudinary(
         uploadStream.end(buffer);
     });
 }
-

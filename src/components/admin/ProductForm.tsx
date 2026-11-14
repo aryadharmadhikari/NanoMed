@@ -71,7 +71,7 @@ export default function ProductForm({ initialData }: { initialData?: DatabasePro
             const { url, error: uploadError } = await uploadImage(file);
 
             if (uploadError || !url) {
-                setError(`Failed to upload one or more images. Please check your Firebase Storage security rules.`);
+                setError(uploadError || "Failed to upload one or more images.");
                 // Continue trying to upload remaining files
             } else {
                 newUrls.push(url);

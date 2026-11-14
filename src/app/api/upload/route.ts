@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isCloudinaryConfigured, uploadToCloudinary } from "../../../lib/cloudinary";
-import { storage } from "../../../lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export async function POST(req: NextRequest) {
     try {
@@ -14,45 +12,33 @@ export async function POST(req: NextRequest) {
 
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
-        const contentType = file.type || "image/jpeg";
-        const fileName = file.name || "upload.jpg";
 
-        // 1. Primary: Use Cloudinary if credentials are configured
-        if (isCloudinaryConfigured()) {
-            const { url, public_id } = await uploadToCloudinary(buffer, "nanomed/products");
-
-            return NextResponse.json({
-                success: true,
-                url,
-                public_id,
-                provider: "cloudinary",
-            });
+        // Check if Cloudinary is configured
+        if (!isCloudinaryConfigured()) {
+            console.error(
+                "[Upload Error] Cloudinary credentials are not detected in process.env. Did you restart the Next.js dev server after editing .env.local?"
+            );
+            return NextResponse.json(
+                {
+                    error: "Cloudinary credentials not detected. Please restart your Next.js development server (Ctrl+C then npm run dev) to load .env.local.",
+                },
+                { status: 500 }
+            );
         }
 
-        // 2. Fallback: If Cloudinary keys are not yet provided, fall back to Firebase Storage
-        console.warn(
-            "[Upload] Cloudinary is not configured. Falling back to Firebase Storage. Please configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in .env.local."
-        );
-
-        const fileExt = fileName.includes(".") ? fileName.split(".").pop() : "jpg";
-        const uniqueName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
-        const storageRef = ref(storage, `products/${uniqueName}`);
-
-        const snapshot = await uploadBytes(storageRef, new Uint8Array(buffer), {
-            contentType,
-        });
-
-        const downloadURL = await getDownloadURL(snapshot.ref);
+        // Upload to Cloudinary
+        const { url, public_id } = await uploadToCloudinary(buffer, "nanomed/products");
 
         return NextResponse.json({
             success: true,
-            url: downloadURL,
-            provider: "firebase",
+            url,
+            public_id,
+            provider: "cloudinary",
         });
     } catch (error: any) {
-        console.error("Error handling file upload:", error);
+        console.error("[Upload Error]:", error);
         return NextResponse.json(
-            { error: error.message || "Failed to upload image" },
+            { error: error.message || "Failed to upload image to Cloudinary" },
             { status: 500 }
         );
     }

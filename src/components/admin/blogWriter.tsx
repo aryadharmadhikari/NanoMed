@@ -180,7 +180,11 @@ export default function BlogWriter({ initialData, categories, authors }: BlogWri
         if (!files.length) return;
         setIsUploadingCover(true);
         const urls: string[] = [];
-        for (const file of files) { const { url } = await uploadImage(file); if (url) urls.push(url); }
+        for (const file of files) { 
+            const { url, error: uploadErr } = await uploadImage(file); 
+            if (uploadErr) setError(uploadErr);
+            if (url) urls.push(url); 
+        }
         setUploadedImages(prev => {
             const next = [...prev, ...urls];
             if (prev.length === 0 && urls.length > 0) setCoverIndex(0);
